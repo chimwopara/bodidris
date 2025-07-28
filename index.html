@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bodunwa 'Bod' Idris - Executive Consultant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A; /* Very dark background from screenshots */
+            color: #E5E7EB; /* Light gray text */
+        }
+        .hero-section {
+            /* Using local hero image */
+            background-image: url('hero.png');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* Side Menu Styles */
+        #side-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        body.menu-open #side-menu {
+            transform: translateX(0);
+        }
+        #menu-backdrop {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+        body.menu-open #menu-backdrop {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .menu-link {
+            transition: color 0.2s;
+        }
+        .menu-link:hover {
+            color: #FBBF24; /* Amber-400 for hover */
+        }
+
+        .card-border {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s;
+        }
+        .card-border:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+        }
+        .form-input {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #6B7280;
+            border-radius: 0;
+            padding: 1rem 0;
+            font-size: 1.125rem;
+            transition: border-color 0.3s;
+        }
+        .form-input:focus {
+            background-color: transparent;
+            border-color: #FFFFFF;
+            outline: none;
+        }
+        .form-input::placeholder {
+            color: #9CA3AF;
+        }
+        .btn-primary {
+            background-color: transparent;
+            color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+        .form-field {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease-in-out;
+            transform: translateY(-10px);
+            margin-bottom: 2rem;
+        }
+        .form-field.active {
+            opacity: 1;
+            max-height: 800px;
+            transform: translateY(0);
+        }
+        .section-container-border {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem; /* 12px */
+            padding: 0.75rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Menu Backdrop -->
+    <div id="menu-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+    <!-- Side Menu Panel -->
+    <div id="side-menu" class="fixed top-0 right-0 h-full w-80 bg-black z-50 p-8">
+        <div class="flex justify-end mb-8">
+            <button id="close-menu-button" class="text-white">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-4">
+            <a href="#about" class="menu-link text-xl text-white">About Me</a>
+            <a href="#contact" class="menu-link text-xl text-white">Contact</a>
+        </nav>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-30">
+        <div class="container mx-auto px-6 py-5 flex justify-end items-center">
+            <button id="open-menu-button" class="text-black mix-blend-difference">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <div class="p-4">
+            <section id="home" class="hero-section h-[85vh] min-h-[700px] flex items-center justify-start text-left rounded-xl overflow-hidden border border-gray-700 relative">
+                <div class="container mx-auto px-0 md:px-0">
+                    <div class="max-w-2xl -ml-16 md:-ml-24 lg:-ml-32 relative">
+                        <!-- Dark overlay rectangle behind text -->
+                        <div class="absolute inset-0 bg-black bg-opacity-60 rounded-2xl -z-10 transform scale-110"></div>
+                        <div class="relative z-10 p-8">
+                        <div class="relative z-10 p-8">
+                            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-4 text-black">
+                                Hi, I'm Bod Idris
+                            </h1>
+                            <p class="text-lg md:text-xl text-gray-800 mb-8">
+                                An executive consultant and strategic leader focused on leveraging technology to drive transformation and deliver impactful marketplace solutions.
+                            </p>
+                            <a href="#about" class="border border-black text-black font-bold py-3 px-8 rounded-lg hover:bg-black hover:text-white transition-colors">
+                                About Me
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-black">
+            <div class="container mx-auto px-4">
+                 <div class="border border-gray-700 rounded-xl p-6 md:p-12 relative">
+                    <!-- Thin border rectangle -->
+                    <div class="absolute inset-0 border-2 border-white border-opacity-50 rounded-xl"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+                        <div class="text-gray-300 text-lg leading-relaxed">
+                            <h2 class="text-4xl font-bold text-white mb-6">Hello Friend,</h2>
+                            <p>You are an asset to your world. You are loaded with value and are standing on a mountain of it. My team and I are committed to helping you shift your mindset to see possibilities and become those possibilities. We share wisdom and actionable strategies that help you become your best self in our ever-evolving world.</p>
+                            <p class="mt-4">Our world is filled with uncertainties now, and this is not a good time to travel the path of life alone. We welcome you to our community of high-impact leaders that shape the destinies of their families, organizations, and nations.</p>
+                             <p class="mt-6 text-white font-semibold">To your success,</p>
+                            <p class="text-white">Bod Idris</p>
+                        </div>
+                        <div class="flex justify-center items-center">
+                            <video class="rounded-lg shadow-2xl w-full max-w-md object-cover" autoplay loop muted playsinline>
+                                <source src="video1.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Worked With Section -->
+        <section id="featured" class="py-24 bg-contain bg-center bg-no-repeat" style="background-image: linear-gradient(to right, rgba(10, 10, 10, 0.9) 20%, rgba(10, 10, 10, 0.1) 80%), url('photo1.png'); min-height: 600px;">>
+            <div class="container mx-auto px-6 md:px-12">
+                <div class="w-full md:w-1/2 lg:w-1/3">
+                    <h3 class="text-gray-300 text-sm font-bold uppercase tracking-widest mb-8">WORKED WITH</h3>
+                    <div class="space-y-8 text-white">
+                        <!-- RBC -->
+                        <div class="text-4xl font-bold">RBC</div>
+        
+                        <!-- Government of Alberta -->
+                        <div class="text-3xl font-medium">Government of Alberta</div>
+        
+                        <!-- CIBC -->
+                        <div class="text-4xl font-bold">CIBC</div>
+        
+                        <!-- HP -->
+                        <div class="text-4xl font-bold">HP</div>
+
+                        <!-- City of Edmonton -->
+                        <div>
+                            <div class="text-3xl font-medium">City of Edmonton</div>
+                        </div>
+
+                        <!-- NAIT -->
+                        <div>
+                            <div class="text-3xl font-medium">NAIT</div>
+                            <div class="text-xs tracking-widest text-gray-300 mt-1">Northern Alberta Institute of Technology</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-white">Book a Consultation</h2>
+                    <p class="text-gray-400 mt-2">Ready to transform your business? Let's talk.</p>
+                </div>
+                <div class="max-w-2xl mx-auto py-12">
+                    <form id="consultation-form" class="max-w-lg mx-auto">
+                        <div id="form-success" class="hidden text-white p-4 rounded-lg mb-6 text-center">
+                            Thank you for your message! I will get back to you shortly.
+                        </div>
+                        
+                        <div class="form-field active" id="name-field">
+                            <input type="text" id="name" name="name" placeholder="What's your full name?" class="form-input w-full text-white" required>
+                        </div>
+                        
+                        <div class="form-field" id="contact-field">
+                            <input type="text" id="contact" name="contact" placeholder="What's your email or phone number?" class="form-input w-full text-white" required>
+                        </div>
+                        
+                        <div class="form-field" id="message-field">
+                            <textarea id="message" name="message" rows="3" placeholder="How can we help you?" class="form-input w-full text-white resize-none" required></textarea>
+                        </div>
+                        
+                        <div class="form-field" id="calendly-field">
+                            <div class="text-white text-lg mb-4">Pick your availability for our meeting:</div>
+                            <div class="calendly-inline-widget" data-url="https://calendly.com/bodunwa/consultation" style="min-width:320px;height:700px;"></div>
+                        </div>
+                        
+                        <div class="form-field" id="submit-field">
+                            <button type="submit" class="btn-primary font-medium py-3 px-8 rounded-lg mt-6">
+                                Confirm Booking
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-900 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-gray-400">
+                <div class="col-span-2 md:col-span-1">
+                     <a href="#" class="text-2xl font-bold tracking-wider text-white">BOD IDRIS</a>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">About Me</h4>
+                    <ul>
+                        <li class="mb-2"><a href="#about" class="hover:text-white">Who is Bod?</a></li>
+                        <li class="mb-2"><a href="#" class="hover:text-white">Mission & Vision</a></li>
+                        <li class="mb-2"><a href="#" class="hover:text-white">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Services</h4>
+                    <ul>
+                        <li class="mb-2"><a href="#" class="hover:text-white">Consulting</a></li>
+                        <li class="mb-2"><a href="#" class="hover:text-white">Speaking</a></li>
+                        <li class="mb-2"><a href="#" class="hover:text-white">Training</a></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h4 class="font-bold text-white mb-4">Media</h4>
+                    <ul>
+                        <li class="mb-2"><a href="#" class="hover:text-white">Media Room</a></li>
+                        <li class="mb-2"><a href="#" class="hover:text-white">Press Kit</a></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h4 class="font-bold text-white mb-4">Contact</h4>
+                     <a href="#contact" class="bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700">Get In Touch</a>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-gray-900 flex flex-col sm:flex-row justify-between items-center text-gray-500">
+                <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                    <p>&copy; <span id="year"></span> Bodunwa Idris. All Rights Reserved.</p>
+                    <a href="https://www.instagram.com/mrwopara/" target="_blank" rel="noopener noreferrer" class="text-sm hover:text-white">website by chim</a>
+                </div>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="https://www.instagram.com/pastorbodidris/?hl=en" target="_blank" rel="noopener noreferrer" class="hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/PstBODIDRIS/" target="_blank" rel="noopener noreferrer" class="hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/bodunwa-bod-idris" target="_blank" rel="noopener noreferrer" class="hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                     <a href="mailto:bodunwa@gmail.com" class="hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const openMenuBtn = document.getElementById('open-menu-button');
+        const closeMenuBtn = document.getElementById('close-menu-button');
+        const menuBackdrop = document.getElementById('menu-backdrop');
+        const menuLinks = document.querySelectorAll('#side-menu a');
+
+        function toggleMenu() {
+            document.body.classList.toggle('menu-open');
+        }
+
+        openMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        menuBackdrop.addEventListener('click', toggleMenu);
+        menuLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Progressive form functionality - wrapped in DOM ready check
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing form'); // Debug line
+            
+            const nameField = document.getElementById('name');
+            const contactField = document.getElementById('contact');
+            const messageField = document.getElementById('message');
+            const nameFieldContainer = document.getElementById('name-field');
+            const contactFieldContainer = document.getElementById('contact-field');
+            const messageFieldContainer = document.getElementById('message-field');
+            const calendlyFieldContainer = document.getElementById('calendly-field');
+            const submitFieldContainer = document.getElementById('submit-field');
+            const consultationForm = document.getElementById('consultation-form');
+            const formSuccessMessage = document.getElementById('form-success');
+
+            // Debug: Check if all elements are found
+            console.log('Elements found:', {
+                nameField: !!nameField,
+                contactField: !!contactField,
+                messageField: !!messageField,
+                messageFieldContainer: !!messageFieldContainer
+            });
+
+            let calendlyEventScheduled = false;
+
+            // Name field input handler
+            nameField.addEventListener('input', function() {
+                console.log('Name field input:', this.value); // Debug line
+                if (this.value.trim().length > 0) {
+                    contactFieldContainer.classList.add('active');
+                } else {
+                    contactFieldContainer.classList.remove('active');
+                    messageFieldContainer.classList.remove('active');
+                    calendlyFieldContainer.classList.remove('active');
+                    submitFieldContainer.classList.remove('active');
+                    contactField.value = '';
+                    messageField.value = '';
+                }
+            });
+
+            // Contact field input handler
+            contactField.addEventListener('input', function() {
+                console.log('Contact field input detected:', this.value); // Debug line
+                if (this.value.trim().length > 0) {
+                    console.log('Adding active class to message field'); // Debug line
+                    messageFieldContainer.classList.add('active');
+                } else {
+                    console.log('Removing active class from message field'); // Debug line
+                    messageFieldContainer.classList.remove('active');
+                    calendlyFieldContainer.classList.remove('active');
+                    submitFieldContainer.classList.remove('active');
+                    messageField.value = '';
+                }
+            });
+
+            // Message field input handler
+            messageField.addEventListener('input', function() {
+                if (this.value.trim().length > 0) {
+                    calendlyFieldContainer.classList.add('active');
+                    // Simple calendar placeholder - replace with actual Calendly URL
+                    setTimeout(() => {
+                        const calendlyWidget = document.querySelector('.calendly-inline-widget');
+                        if (calendlyWidget && !calendlyWidget.innerHTML.trim()) {
+                            calendlyWidget.innerHTML = `<iframe src="https://calendly.com/bodunwa/consultation?embed_domain=${window.location.hostname}&embed_type=Inline" width="100%" height="700" frameborder="0" scrolling="no"></iframe>`;
+                        }
+                    }, 500);
+                } else {
+                    calendlyFieldContainer.classList.remove('active');
+                    submitFieldContainer.classList.remove('active');
+                }
+            });
+
+            // Listen for Calendly events via iframe messages
+            window.addEventListener('message', function(e) {
+                if (e.origin === 'https://calendly.com' && e.data.event) {
+                    if (e.data.event === 'calendly.event_scheduled') {
+                        calendlyEventScheduled = true;
+                        submitFieldContainer.classList.add('active');
+                    }
+                }
+            });
+
+            // Handle form submission
+            consultationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (calendlyEventScheduled) {
+                    formSuccessMessage.innerHTML = '<p>Thank you! Your consultation has been booked. You should receive a confirmation email shortly.</p>';
+                    formSuccessMessage.classList.remove('hidden');
+                    consultationForm.reset();
+                    
+                    // Reset form to initial state
+                    contactFieldContainer.classList.remove('active');
+                    messageFieldContainer.classList.remove('active');
+                    calendlyFieldContainer.classList.remove('active');
+                    submitFieldContainer.classList.remove('active');
+                    calendlyEventScheduled = false;
+                    
+                    setTimeout(() => {
+                        formSuccessMessage.classList.add('hidden');
+                    }, 7000);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
