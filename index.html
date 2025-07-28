@@ -22,34 +22,60 @@
             background-position: center;
         }
         
-        /* Mobile-specific background positioning to center the subject */
+        /* Mobile-specific styles - force white text and center alignment */
         @media (max-width: 768px) {
             .hero-section {
                 background-position: center 20%; /* Adjust this to center Bod's face */
             }
             
-            /* Mobile text shadows for white text */
-            .hero-title {
+            /* Force mobile styles */
+            .hero-title-mobile {
+                color: white !important;
+                text-align: center !important;
                 text-shadow: 2px 2px 8px rgba(0,0,0,0.8) !important;
             }
-            .hero-description {
+            .hero-description-mobile {
+                color: #e5e7eb !important; /* light gray */
+                text-align: center !important;
                 text-shadow: 1px 1px 4px rgba(0,0,0,0.8) !important;
             }
-            .hero-button {
+            .hero-button-mobile {
+                color: white !important;
+                border: 1px solid white !important;
                 text-shadow: 1px 1px 2px rgba(0,0,0,0.6) !important;
+            }
+            .hero-button-mobile:hover {
+                background-color: white !important;
+                color: black !important;
+            }
+            .hero-container-mobile {
+                text-align: center !important;
             }
         }
         
         /* Desktop text shadows for black text */
         @media (min-width: 769px) {
             .hero-title {
+                color: black !important;
+                text-align: left !important;
                 text-shadow: 2px 2px 4px rgba(255,255,255,0.8), -1px -1px 2px rgba(255,255,255,0.8), 1px -1px 2px rgba(255,255,255,0.8), -1px 1px 2px rgba(255,255,255,0.8) !important;
             }
             .hero-description {
+                color: #1f2937 !important; /* gray-800 */
+                text-align: left !important;
                 text-shadow: 1px 1px 3px rgba(255,255,255,0.9), -1px -1px 2px rgba(255,255,255,0.9), 1px -1px 2px rgba(255,255,255,0.9), -1px 1px 2px rgba(255,255,255,0.9) !important;
             }
             .hero-button {
+                color: black !important;
+                border: 1px solid black !important;
                 text-shadow: 1px 1px 2px rgba(255,255,255,0.8), -1px -1px 1px rgba(255,255,255,0.8), 1px -1px 1px rgba(255,255,255,0.8), -1px 1px 1px rgba(255,255,255,0.8) !important;
+            }
+            .hero-button:hover {
+                background-color: black !important;
+                color: white !important;
+            }
+            .hero-container-mobile {
+                text-align: left !important;
             }
         }
         
