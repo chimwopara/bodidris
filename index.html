@@ -390,18 +390,163 @@
             messageField.addEventListener('input', function() {
                 if (this.value.trim().length > 0) {
                     calendlyFieldContainer.classList.add('active');
-                    // Simple calendar placeholder - replace with actual Calendly URL
-                    setTimeout(() => {
-                        const calendlyWidget = document.querySelector('.calendly-inline-widget');
-                        if (calendlyWidget && !calendlyWidget.innerHTML.trim()) {
-                            calendlyWidget.innerHTML = `<iframe src="https://calendly.com/bodunwa/consultation?embed_domain=${window.location.hostname}&embed_type=Inline" width="100%" height="700" frameborder="0" scrolling="no"></iframe>`;
-                        }
-                    }, 500);
+                    // Load available slots from Calendly API
+                    loadCalendlyAvailability();
                 } else {
                     calendlyFieldContainer.classList.remove('active');
                     submitFieldContainer.classList.remove('active');
                 }
             });
+
+            // Function to load Calendly availability
+            async function loadCalendlyAvailability() {
+                try {
+                    // Your Calendly API configuration
+                    const CALENDLY_API_TOKEN = 'YOUR_API_TOKEN_HERE'; // Replace with your actual token
+                    const CALENDLY_USER_URI = 'https://api.calendly.com/users/YOUR_USER_UUID'; // Replace with your user URI
+                    
+                    // Get current user's event types
+                    const eventTypesResponse = await fetch('https://api.calendly.com/event_types?user=' + CALENDLY_USER_URI, {
+                        headers: {
+                            'Authorization': 'Bearer ' + CALENDLY_API_TOKEN,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    if (!eventTypesResponse.ok) {
+                        throw new Error('Failed to fetch event types');
+                    }
+                    
+                    const eventTypesData = await eventTypesResponse.json();
+                    const consultationEventType = eventTypesData.collection.find(et => 
+                        et.name.toLowerCase().includes('consultation')
+                    );
+                    
+                    if (!consultationEventType) {
+                        throw new Error('Consultation event type not found');
+                    }
+                    
+                    // Get availability for the next 30 days
+                    const startTime = new Date().toISOString();
+                    const endTime = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+                    
+                    const availabilityResponse = await fetch(
+                        `https://api.calendly.com/user_availability_schedules?user=${CALENDLY_USER_URI}&start_time=${startTime}&end_time=${endTime}`,
+                        {
+                            headers: {
+                                'Authorization': 'Bearer ' + CALENDLY_API_TOKEN,
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    );
+                    
+                    if (!availabilityResponse.ok) {
+                        throw new Error('Failed to fetch availability');
+                    }
+                    
+                    const availabilityData = await availabilityResponse.json();
+                    
+                    // Render custom availability picker
+                    renderCustomAvailability(availabilityData, consultationEventType);
+                    
+                } catch (error) {
+                    console.error('Error loading Calendly availability:', error);
+                    // Fallback to standard Calendly embed
+                    loadStandardCalendlyEmbed();
+                }
+            }
+            
+            // Function to render custom availability picker
+            function renderCustomAvailability(availabilityData, eventType) {
+                const calendlyWidget = document.querySelector('.calendly-inline-widget');
+                
+                let availabilityHTML = '<div class="custom-calendar">';
+                availabilityHTML += '<h3 class="text-white text-xl mb-4">Select an available time:</h3>';
+                
+                // Group availability by date
+                const availabilityByDate = {};
+                availabilityData.collection.forEach(schedule => {
+                    schedule.rules.forEach(rule => {
+                        const date = rule.date || new Date().toISOString().split('T')[0];
+                        if (!availabilityByDate[date]) {
+                            availabilityByDate[date] = [];
+                        }
+                        
+                        // Generate time slots based on rule intervals
+                        const startTime = new Date(`${date}T${rule.intervals[0].from}`);
+                        const endTime = new Date(`${date}T${rule.intervals[0].to}`);
+                        const duration = eventType.duration; // in minutes
+                        
+                        for (let time = new Date(startTime); time < endTime; time.setMinutes(time.getMinutes() + duration)) {
+                            availabilityByDate[date].push({
+                                time: time.toTimeString().slice(0, 5),
+                                datetime: new Date(time).toISOString()
+                            });
+                        }
+                    });
+                });
+                
+                // Render date and time options
+                Object.keys(availabilityByDate).slice(0, 7).forEach(date => {
+                    const dateObj = new Date(date);
+                    const dateStr = dateObj.toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+                    
+                    availabilityHTML += `<div class="date-group mb-6">`;
+                    availabilityHTML += `<h4 class="text-white text-lg mb-3">${dateStr}</h4>`;
+                    availabilityHTML += `<div class="time-slots grid grid-cols-3 gap-2">`;
+                    
+                    availabilityByDate[date].forEach(slot => {
+                        availabilityHTML += `
+                            <button type="button" 
+                                    class="time-slot bg-transparent border border-gray-500 text-white py-2 px-4 rounded hover:border-white hover:bg-white hover:text-black transition-all" 
+                                    data-datetime="${slot.datetime}"
+                                    data-time="${slot.time}">
+                                ${slot.time}
+                            </button>
+                        `;
+                    });
+                    
+                    availabilityHTML += `</div></div>`;
+                });
+                
+                availabilityHTML += '</div>';
+                
+                calendlyWidget.innerHTML = availabilityHTML;
+                
+                // Add click handlers for time slots
+                document.querySelectorAll('.time-slot').forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Remove selected class from all buttons
+                        document.querySelectorAll('.time-slot').forEach(btn => {
+                            btn.classList.remove('bg-white', 'text-black');
+                            btn.classList.add('bg-transparent', 'text-white');
+                        });
+                        
+                        // Add selected class to clicked button
+                        this.classList.remove('bg-transparent', 'text-white');
+                        this.classList.add('bg-white', 'text-black');
+                        
+                        // Store selected time
+                        window.selectedDateTime = this.dataset.datetime;
+                        window.selectedTimeDisplay = this.dataset.time;
+                        
+                        // Show submit button
+                        calendlyEventScheduled = true;
+                        submitFieldContainer.classList.add('active');
+                    });
+                });
+            }
+            
+            // Fallback function for standard Calendly embed
+            function loadStandardCalendlyEmbed() {
+                const calendlyWidget = document.querySelector('.calendly-inline-widget');
+                calendlyWidget.innerHTML = `<iframe src="https://calendly.com/bodunwa/consultation?embed_domain=${window.location.hostname}&embed_type=Inline" width="100%" height="700" frameborder="0" scrolling="no"></iframe>`;
+            }
 
             // Listen for Calendly events via iframe messages
             window.addEventListener('message', function(e) {
