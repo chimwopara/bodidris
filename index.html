@@ -10,6 +10,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0A0A0A; /* Very dark background from screenshots */
@@ -22,35 +31,111 @@
             background-position: center;
         }
         
+        /* Prevent horizontal overflow */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Hide BOD IDRIS text completely */
+        header .text-white.font-bold.text-xl {
+            display: none !important;
+        }
+        
+        /* Responsive background positioning to keep subject centered */
+        .hero-section {
+            background-position: 45% center; /* Move left to bring Bod into frame */
+        }
+        
+        @media (max-width: 1200px) {
+            .hero-section {
+                background-position: 50% center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                background-position: 55% center;
+            }
+        }
+        
         /* Mobile-first responsive improvements */
         @media (max-width: 640px) {
             .container {
                 padding-left: 1rem;
                 padding-right: 1rem;
+                max-width: 100vw;
+            }
+            
+            /* Make hamburger menu black on mobile */
+            #mobile-menu-btn {
+                color: black !important;
+                mix-blend-mode: normal !important;
             }
             
             /* Hero section mobile optimization */
             .hero-section {
-                min-height: 500px;
-                height: auto;
-                padding: 2rem 0;
+                min-height: 100vh;
+                height: 100vh;
+                padding: 0;
+                background-position: 70% center; /* Move further right for better centering */
+                display: flex;
+                align-items: flex-end !important; /* Bottom aligned on mobile only */
+                justify-content: center;
+            }
+            
+            .hero-section .container {
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                width: 100%;
+                padding-bottom: 4rem; /* Add bottom padding on mobile */
+                max-width: 100vw;
+            }
+            
+            .hero-section .max-w-2xl {
+                max-width: 100% !important;
+                margin: 0 !important;
+                text-align: center !important;
+                padding: 2rem 1rem !important;
+                width: 100%;
             }
             
             .hero-section h1 {
                 font-size: 2.5rem !important;
                 line-height: 1.2 !important;
                 margin-bottom: 1rem !important;
+                color: white !important;
+                text-align: center !important;
+                text-shadow: 2px 2px 8px rgba(0,0,0,0.8) !important;
             }
             
             .hero-section p {
                 font-size: 1rem !important;
                 margin-bottom: 1.5rem !important;
                 line-height: 1.5 !important;
+                color: #e5e7eb !important;
+                text-align: center !important;
+                text-shadow: 1px 1px 4px rgba(0,0,0,0.8) !important;
             }
             
             .hero-section a {
                 padding: 0.75rem 1.5rem !important;
                 font-size: 0.875rem !important;
+                color: white !important;
+                border: 1px solid white !important;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.6) !important;
+                display: inline-block;
+            }
+            
+            .hero-section a:hover {
+                background-color: white !important;
+                color: black !important;
+            }
+            
+            /* Remove the dark overlay on mobile */
+            .hero-section .absolute {
+                display: none !important;
             }
             
             /* Services cards mobile */
@@ -65,6 +150,19 @@
             
             .service-card p {
                 font-size: 0.875rem;
+            }
+            
+            /* Service cards container - prevent overflow */
+            .service-cards-container {
+                width: 100%;
+                max-width: 100vw;
+                overflow-x: auto;
+                padding-right: 1rem;
+            }
+            
+            .service-cards-container .flex {
+                width: max-content;
+                max-width: none;
             }
             
             /* Trusted by grid mobile */
@@ -151,67 +249,8 @@
             }
         }
         
-        @media (max-width: 768px) {
-            .hero-section {
-                background-position: center center; /* Center Bod's face */
-                display: flex;
-                align-items: flex-end; /* Align content to bottom */
-                justify-content: center; /* Center horizontally */
-            }
-            
-            /* Mobile hero container positioning */
-            .hero-section .container {
-                display: flex;
-                align-items: flex-end;
-                justify-content: center;
-                width: 100%;
-                padding-bottom: 3rem; /* Add bottom padding */
-            }
-            
-            .hero-section .max-w-2xl {
-                max-width: 100% !important;
-                margin: 0 !important;
-                text-align: center !important;
-                padding: 2rem !important;
-            }
-            
-            /* Remove the dark overlay on mobile */
-            .hero-section .absolute {
-                display: none !important;
-            }
-            
-            /* Force mobile text styles */
-            .hero-section h1 {
-                color: white !important;
-                text-align: center !important;
-                text-shadow: 2px 2px 8px rgba(0,0,0,0.8) !important;
-                font-size: 3rem !important; /* Smaller on mobile */
-                line-height: 1.1 !important;
-            }
-            
-            .hero-section p {
-                color: #e5e7eb !important; /* light gray */
-                text-align: center !important;
-                text-shadow: 1px 1px 4px rgba(0,0,0,0.8) !important;
-                font-size: 1.125rem !important;
-                margin-bottom: 2rem !important;
-            }
-            
-            .hero-section a {
-                color: white !important;
-                border: 1px solid white !important;
-                text-shadow: 1px 1px 2px rgba(0,0,0,0.6) !important;
-                display: inline-block;
-            }
-            
-            .hero-section a:hover {
-                background-color: white !important;
-                color: black !important;
-            }
-        }
-        
         /* Desktop text shadows for black text */
-        @media (min-width: 769px) {
+        @media (min-width: 641px) {
             .hero-section h1 {
                 color: black !important;
                 text-align: left !important;
@@ -358,6 +397,7 @@
             overflow-x: auto;
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none; /* IE/Edge */
+            width: 100%;
         }
         .service-cards-container::-webkit-scrollbar {
             display: none; /* Chrome/Safari */
@@ -426,16 +466,14 @@
 
     <!-- Header & Navigation -->
     <header id="header" class="fixed top-0 left-0 right-0 z-30">
-        <div class="container mx-auto px-6 py-5 flex justify-between items-center">
-            <a href="index.html" class="text-white font-bold text-xl mix-blend-difference">BOD IDRIS</a>
-            
+        <div class="container mx-auto px-6 py-5 flex justify-end items-center">
             <!-- Desktop menu button -->
             <button id="open-menu-button" class="hidden md:block text-black mix-blend-difference">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
             
             <!-- Mobile menu button -->
-            <button id="mobile-menu-btn" class="md:hidden text-white mix-blend-difference">
+            <button id="mobile-menu-btn" class="md:hidden text-black">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -666,7 +704,7 @@
                         
                         <div class="form-field" id="calendly-field">
                             <div class="text-white text-lg mb-4">Pick your availability for our meeting:</div>
-                            <div class="calendly-inline-widget" data-url="YOUR_CALENDLY_URL_HERE" style="min-width:320px;height:700px;"></div>
+                            <div class="calendly-inline-widget" data-url="https://calendly.com/bodidris-58" style="min-width:320px;height:700px;"></div>
                         </div>
                         
                         <div class="form-field" id="submit-field">
