@@ -28,7 +28,7 @@
             /* Using local hero image */
             background-image: url('hero.png');
             background-size: cover;
-            background-position: center;
+            background-position: center top;
         }
         
         /* Prevent horizontal overflow */
@@ -44,18 +44,18 @@
         
         /* Responsive background positioning to keep subject centered */
         .hero-section {
-            background-position: 45% center; /* Move left to bring Bod into frame */
+            background-position: 45% top; /* Prioritize head on desktop */
         }
         
         @media (max-width: 1200px) {
             .hero-section {
-                background-position: 50% center;
+                background-position: 50% top;
             }
         }
         
         @media (max-width: 768px) {
             .hero-section {
-                background-position: 55% center;
+                background-position: 55% top;
             }
         }
         
@@ -78,7 +78,7 @@
                 min-height: 100vh;
                 height: 100vh;
                 padding: 0;
-                background-position: 70% center; /* Move further right for better centering */
+                background-position: 70% top !important; /* Prioritize head on mobile */
                 display: flex;
                 align-items: flex-end !important; /* Bottom aligned on mobile only */
                 justify-content: center;
@@ -152,17 +152,21 @@
                 font-size: 0.875rem;
             }
             
-            /* Service cards container - prevent overflow */
+            /* Service cards mobile - disable auto-scroll, enable manual scroll */
             .service-cards-container {
-                width: 100%;
-                max-width: 100vw;
                 overflow-x: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
                 padding-right: 1rem;
             }
             
-            .service-cards-container .flex {
-                width: max-content;
-                max-width: none;
+            .service-cards-container::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .service-cards-track {
+                animation: none !important;
+                width: max-content !important;
             }
             
             /* Trusted by grid mobile */
@@ -172,7 +176,7 @@
             }
             
             .trusted-by-item div {
-                font-size: 1.25rem !important;
+                font-size: 1rem !important;
             }
             
             /* Form mobile optimization */
@@ -232,8 +236,13 @@
             }
             
             .trusted-by-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
                 text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .trusted-by-item div {
+                font-size: 0.875rem !important;
             }
             
             .text-4xl, .text-5xl {
@@ -330,6 +339,20 @@
             background-color: #FFFFFF;
             color: #000000;
         }
+        /* Draft Email Modal Styling */
+        #draft-email-modal {
+            backdrop-filter: blur(8px);
+        }
+        
+        #draft-email-container {
+            min-height: auto;
+            max-height: none;
+            height: auto;
+            overflow: visible !important;
+            position: relative;
+        }
+        
+        /* Form field improvements */
         .form-field {
             opacity: 0;
             max-height: 0;
@@ -341,28 +364,101 @@
         }
         .form-field.active {
             opacity: 1;
-            max-height: 200px; /* Enough height for input fields */
+            max-height: 100px; /* Reduced from 200px */
             transform: translateY(0);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem; /* Reduced from 2rem */
             padding: 0;
         }
         
-        /* Specific height for textarea */
-        #message-field.active {
-            max-height: 250px;
+        /* Specific heights for different field types */
+        #email-message-field.active {
+            max-height: 140px; /* Reduced from 250px */
+        }
+
+        #email-urgency-field.active {
+            max-height: 180px; /* Reduced from 300px */
         }
         
-        /* Calendly container needs much more height */
-        #calendly-field.active {
-            max-height: 1000px;
+        #email-submit-field.active {
+            max-height: 80px;
         }
         
-        /* Ensure inputs/textareas are properly sized */
-        .form-field input,
-        .form-field textarea {
+        /* Country dropdown styling - Portal approach */
+        .country-dropdown-portal {
+            position: fixed !important;
+            z-index: 9999 !important;
+            background-color: #1f2937 !important;
+            border: 1px solid #4b5563 !important;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 320px;
+            max-height: 280px;
+            overflow: hidden;
+        }
+        
+        #country-list {
+            max-height: 240px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+            background-color: #1f2937;
+        }
+        
+        #country-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #country-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        #country-list::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+        
+        .country-option {
+            padding: 0.75rem 1rem;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.875rem;
+            color: white;
+            background-color: #1f2937;
+        }
+        
+        .country-option:last-child {
+            border-bottom: none;
+        }
+        
+        .country-option:hover {
+            background-color: rgba(75, 85, 99, 0.8) !important;
+        }
+
+        #country-search {
+            padding: 0.75rem 1rem !important;
+            border-radius: 0.5rem 0.5rem 0 0;
+            background-color: #374151 !important;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             width: 100%;
-            margin: 0;
-            padding: 1rem 0;
+            color: white !important;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        
+        #country-search::placeholder {
+            color: #9CA3AF !important;
+        }
+        
+        #country-search:focus {
+            outline: none;
+            background-color: #4b5563 !important;
         }
         
         /* Trusted By Grid Styling */
@@ -385,10 +481,27 @@
             transform: scale(1.05);
         }
         
+        /* Mobile background positioning for trusted by section */
+        @media (max-width: 768px) {
+            #featured {
+                background-position: right top !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #featured {
+                background-position: 80% top !important;
+            }
+        }
+        
         @media (max-width: 768px) {
             .trusted-by-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem 1rem;
+                gap: 1rem 0.5rem;
+            }
+            
+            .trusted-by-item div {
+                font-size: 1rem !important;
             }
         }
         
@@ -398,10 +511,34 @@
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none; /* IE/Edge */
             width: 100%;
+            position: relative;
         }
+        
         .service-cards-container::-webkit-scrollbar {
             display: none; /* Chrome/Safari */
         }
+        
+        /* Auto-scroll animation - desktop only */
+        @media (min-width: 769px) {
+            .service-cards-track {
+                animation: scroll-left 40s linear infinite;
+                width: calc(200% + 48px); /* Width for seamless loop */
+            }
+            
+            .service-cards-track:hover {
+                animation-play-state: paused;
+            }
+        }
+        
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-50% - 24px));
+            }
+        }
+        
         .service-card {
             background-size: cover;
             background-position: center;
@@ -443,6 +580,19 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 0.75rem; /* 12px */
             padding: 0.75rem;
+        }
+        
+        /* Calendly container styling */
+        .calendly-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .calendly-container iframe {
+            border-radius: 12px;
+            border: none;
+            display: block;
         }
     </style>
 </head>
@@ -495,7 +645,7 @@
         <div class="p-4">
             <section id="home" class="hero-section h-[85vh] min-h-[700px] flex items-center justify-start text-left rounded-xl overflow-hidden border border-gray-700 relative">
                 <div class="container mx-auto px-0 md:px-0">
-                    <div class="max-w-2xl md:-ml-24 lg:-ml-32 relative">
+                    <div class="max-w-2xl relative mx-auto md:mx-0 md:ml-20 lg:ml-32 xl:ml-44">
                         <!-- Dark overlay rectangle behind text - desktop only -->
                         <div class="absolute inset-0 bg-black bg-opacity-60 rounded-2xl -z-10 transform scale-110 hidden md:block"></div>
                         <div class="relative z-10 p-8">
@@ -539,68 +689,73 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Mobile scroll indicator (hidden on desktop) -->
+            <div class="text-center mt-8 md:hidden">
+                <p class="text-gray-500 text-sm">← Scroll to explore all services →</p>
+            </div>
         </section>
         
         <!-- Worked With Section -->
-        <section id="featured" class="py-24 bg-contain bg-center bg-no-repeat" style="background-image: linear-gradient(to right, rgba(10, 10, 10, 0.9) 20%, rgba(10, 10, 10, 0.1) 80%), url('photo1.png'); min-height: 600px;">
-            <div class="container mx-auto px-6 md:px-12">
+        <section id="featured" class="py-24 bg-cover bg-no-repeat w-full" style="background-image: linear-gradient(to right, rgba(10, 10, 10, 0.9) 20%, rgba(10, 10, 10, 0.1) 80%), url('photo1.png'); background-position: center top; min-height: 600px;">
+            <div class="w-full">
                 <div class="text-center mb-12">
                     <h3 class="text-gray-300 text-sm font-bold uppercase tracking-widest mb-8">TRUSTED BY</h3>
                 </div>
                 
-                <div class="trusted-by-grid text-white">
+                <div class="trusted-by-grid text-white px-4 md:px-8">
                     <!-- Row 1 -->
                     <div class="trusted-by-item">
-                        <div class="text-3xl md:text-4xl font-bold">RBC</div>
+                        <div class="text-2xl md:text-3xl lg:text-4xl font-bold">RBC</div>
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl font-medium">Government of Alberta</div>
+                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">Government of Alberta</div>
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-3xl md:text-4xl font-bold">CIBC</div>
+                        <div class="text-2xl md:text-3xl lg:text-4xl font-bold">CIBC</div>
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-3xl md:text-4xl font-bold">BMO</div>
+                        <div class="text-2xl md:text-3xl lg:text-4xl font-bold">BMO</div>
                     </div>
 
                     <!-- Row 2 -->
                     <div class="trusted-by-item">
-                        <div class="text-3xl md:text-4xl font-bold">TD</div>
+                        <div class="text-2xl md:text-3xl lg:text-4xl font-bold">TD</div>
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-3xl md:text-4xl font-bold">HP</div>
+                        <div class="text-2xl md:text-3xl lg:text-4xl font-bold">HP</div>
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl font-medium">City of Edmonton</div>
+                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">City of Edmonton</div>
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl font-medium">Alberta Health Services</div>
+                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">Alberta Health Services</div>
                     </div>
 
                     <!-- Row 3 -->
                     <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl font-medium">Edmonton Police Services</div>
+                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">Edmonton Police Services</div>
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl font-medium">NAIT</div>
+                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">NAIT</div>
                         <div class="text-xs tracking-widest text-gray-300 mt-1">Northern Alberta Institute of Technology</div>
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl font-medium">NorQuest College</div>
+                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">City of Winnipeg</div>
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl font-medium">City of Winnipeg</div>
+                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">Fujitsu Canada</div>
                     </div>
 
                     <!-- Row 4 -->
                     <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl font-medium">Athabasca University</div>
+                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">Alberta Blue Cross</div>
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl font-medium">Fujitsu Canada</div>
+                        <!-- Spacer for grid alignment -->
                     </div>
                     <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl font-medium">Alberta Blue Cross</div>
+                        <!-- Spacer for grid alignment -->
                     </div>
                     <div class="trusted-by-item">
                         <!-- Spacer for grid alignment -->
@@ -611,64 +766,82 @@
 
         <!-- Services Section -->
         <section id="services" class="py-24 bg-black">
-            <div class="container mx-auto px-6 md:px-12">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">How I Can Help You</h2>
-                    <p class="text-gray-400 text-lg">Transforming businesses through strategic leadership and innovation</p>
-                </div>
-                
-                <div class="service-cards-container">
-                    <div class="flex space-x-6 pb-4">
-                        <!-- Management Consulting Card -->
-                        <div class="service-card flex-shrink-0" style="background-image: url('photoa.png');">
-                            <div class="service-card-overlay">
-                                <div class="service-card-explore">Explore</div>
-                                <h3 class="text-2xl font-bold text-white mb-2">Management Consulting</h3>
-                                <p class="text-gray-200 text-sm">Strategic guidance to optimize your business operations and drive sustainable growth</p>
-                            </div>
-                        </div>
-
-                        <!-- Professional Project Execution Card -->
-                        <div class="service-card flex-shrink-0" style="background-image: url('photob.png');">
-                            <div class="service-card-overlay">
-                                <div class="service-card-explore">Explore</div>
-                                <h3 class="text-2xl font-bold text-white mb-2">Professional Project Execution</h3>
-                                <p class="text-gray-200 text-sm">End-to-end project delivery with proven methodologies and expert leadership</p>
-                            </div>
-                        </div>
-
-                        <!-- Training Card -->
-                        <div class="service-card flex-shrink-0" style="background-image: url('photoc.png');">
-                            <div class="service-card-overlay">
-                                <div class="service-card-explore">Explore</div>
-                                <h3 class="text-2xl font-bold text-white mb-2">Training</h3>
-                                <p class="text-gray-200 text-sm">Comprehensive skills development programs for teams and individuals</p>
-                            </div>
-                        </div>
-
-                        <!-- Mentorship Class Card -->
-                        <div class="service-card flex-shrink-0" style="background-image: url('photod.png');">
-                            <div class="service-card-overlay">
-                                <div class="service-card-explore">Explore</div>
-                                <h3 class="text-2xl font-bold text-white mb-2">Join My Mentorship Class</h3>
-                                <p class="text-gray-200 text-sm">Exclusive mentorship program for aspiring leaders and entrepreneurs</p>
-                            </div>
-                        </div>
-
-                        <!-- Business Analysis Card -->
-                        <div class="service-card flex-shrink-0" style="background-image: url('photoe.png');">
-                            <div class="service-card-overlay">
-                                <div class="service-card-explore">Explore</div>
-                                <h3 class="text-2xl font-bold text-white mb-2">Business Analysis</h3>
-                                <p class="text-gray-200 text-sm">Deep-dive analysis to identify opportunities and optimize performance</p>
-                            </div>
+            <div class="text-center mb-16 px-6">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">How I Can Help You</h2>
+                <p class="text-gray-400 text-lg">Transforming businesses through strategic leadership and innovation</p>
+            </div>
+            
+            <div class="service-cards-container">
+                <div class="flex space-x-6 pb-4 service-cards-track">
+                    <!-- Management Consulting Card -->
+                    <div class="service-card flex-shrink-0" style="background-image: url('photoa.png');">
+                        <div class="service-card-overlay">
+                            <div class="service-card-explore">Explore</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Management Consulting</h3>
+                            <p class="text-gray-200 text-sm">Strategic guidance to optimize your business operations and drive sustainable growth</p>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Scroll Indicator -->
-                <div class="text-center mt-8">
-                    <p class="text-gray-500 text-sm">← Scroll to explore all services →</p>
+
+                    <!-- Professional Project Execution Card -->
+                    <div class="service-card flex-shrink-0" style="background-image: url('photob.png');">
+                        <div class="service-card-overlay">
+                            <div class="service-card-explore">Explore</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Professional Project Execution</h3>
+                            <p class="text-gray-200 text-sm">End-to-end project delivery with proven methodologies and expert leadership</p>
+                        </div>
+                    </div>
+
+                    <!-- Training Card -->
+                    <div class="service-card flex-shrink-0" style="background-image: url('photoc.png');">
+                        <div class="service-card-overlay">
+                            <div class="service-card-explore">Explore</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Training</h3>
+                            <p class="text-gray-200 text-sm">Comprehensive skills development programs for teams and individuals</p>
+                        </div>
+                    </div>
+
+                    <!-- Mentorship Class Card -->
+                    <div class="service-card flex-shrink-0" style="background-image: url('photod.png');">
+                        <div class="service-card-overlay">
+                            <div class="service-card-explore">Explore</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Join My Mentorship Class</h3>
+                            <p class="text-gray-200 text-sm">Exclusive mentorship program for aspiring leaders and entrepreneurs</p>
+                        </div>
+                    </div>
+
+                    <!-- Business Analysis Card -->
+                    <div class="service-card flex-shrink-0" style="background-image: url('photoe.png');">
+                        <div class="service-card-overlay">
+                            <div class="service-card-explore">Explore</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Business Analysis</h3>
+                            <p class="text-gray-200 text-sm">Deep-dive analysis to identify opportunities and optimize performance</p>
+                        </div>
+                    </div>
+
+                    <!-- Duplicate cards for seamless loop -->
+                    <div class="service-card flex-shrink-0" style="background-image: url('photoa.png');">
+                        <div class="service-card-overlay">
+                            <div class="service-card-explore">Explore</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Management Consulting</h3>
+                            <p class="text-gray-200 text-sm">Strategic guidance to optimize your business operations and drive sustainable growth</p>
+                        </div>
+                    </div>
+
+                    <div class="service-card flex-shrink-0" style="background-image: url('photob.png');">
+                        <div class="service-card-overlay">
+                            <div class="service-card-explore">Explore</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Professional Project Execution</h3>
+                            <p class="text-gray-200 text-sm">End-to-end project delivery with proven methodologies and expert leadership</p>
+                        </div>
+                    </div>
+
+                    <div class="service-card flex-shrink-0" style="background-image: url('photoc.png');">
+                        <div class="service-card-overlay">
+                            <div class="service-card-explore">Explore</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Training</h3>
+                            <p class="text-gray-200 text-sm">Comprehensive skills development programs for teams and individuals</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -677,45 +850,116 @@
         <section id="contact" class="py-24">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold text-white">Get In Touch</h2>
+                    <h2 class="text-4xl font-bold text-white">Schedule a meeting</h2>
                     <p class="text-gray-400 mt-2">Ready to transform your business? Let's talk.</p>
                 </div>
-                <div class="max-w-2xl mx-auto py-12">
-                    <form id="consultation-form" class="max-w-lg mx-auto">
-                        <div id="form-success" class="hidden text-white p-4 rounded-lg mb-6 text-center">
-                            Thank you for your message! I will get back to you shortly.
-                        </div>
-                        
-                        <div class="form-field active" id="name-field">
-                            <input type="text" id="name" name="name" placeholder="What's your full name?" class="form-input w-full text-white" required>
-                        </div>
-                        
-                        <div class="form-field" id="email-field">
-                            <input type="email" id="email" name="email" placeholder="What's your email address?" class="form-input w-full text-white" required>
-                        </div>
-                        
-                        <div class="form-field" id="phone-field">
-                            <input type="tel" id="phone" name="phone" placeholder="What's your phone number?" class="form-input w-full text-white" required>
-                        </div>
-                        
-                        <div class="form-field" id="message-field">
-                            <textarea id="message" name="message" rows="3" placeholder="How can we help you?" class="form-input w-full text-white resize-none" required></textarea>
-                        </div>
-                        
-                        <div class="form-field" id="calendly-field">
-                            <div class="text-white text-lg mb-4">Pick your availability for our meeting:</div>
-                            <div class="calendly-inline-widget" data-url="https://calendly.com/bodidris-58" style="min-width:320px;height:700px;"></div>
-                        </div>
-                        
-                        <div class="form-field" id="submit-field">
-                            <button type="button" id="schedule-btn" class="btn-primary font-medium py-3 px-8 rounded-lg mt-6">
-                                Pick Schedule
-                            </button>
-                        </div>
-                    </form>
+                <div class="max-w-4xl mx-auto">
+                    <div class="calendly-container border border-gray-700 rounded-xl p-4 bg-black overflow-hidden">
+                        <div class="calendly-inline-widget" data-url="https://calendly.com/bodidris-58" style="min-width:320px;height:900px;border-radius:12px;overflow:hidden;"></div>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- Draft Email Modal -->
+        <div id="draft-email-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
+            <div id="draft-email-container" class="bg-black border border-gray-700 rounded-xl p-6 max-w-3xl w-full transition-all duration-300 ease-in-out relative">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-white">Draft Email</h2>
+                    <button id="close-modal-btn" class="text-gray-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="email-draft-form" class="max-w-2xl mx-auto">
+                    <div id="email-form-success" class="hidden text-white p-4 rounded-lg mb-6 text-center">
+                        Thank you for your message! I will get back to you shortly.
+                    </div>
+                    
+                    <div class="form-field active" id="email-name-field">
+                        <input type="text" id="email-name" name="name" placeholder="What's your full name?" class="form-input w-full text-white" required>
+                    </div>
+                    
+                    <div class="form-field" id="email-email-field">
+                        <input type="email" id="email-email" name="email" placeholder="What's your email address?" class="form-input w-full text-white" required>
+                    </div>
+                    
+                    <div class="form-field" id="email-phone-field">
+                        <div class="flex space-x-3">
+                            <div class="relative w-48" id="country-selector-container">
+                                <button type="button" id="country-selector" class="form-input w-full text-white text-left flex items-center justify-between focus:outline-none">
+                                    <span id="selected-country">🇨🇦 +1</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <input type="tel" id="email-phone" name="phone" placeholder="Enter phone number" class="form-input flex-1 text-white" required>
+                        </div>
+                        <div id="phone-error" class="hidden text-red-400 text-sm mt-1">Please enter at least 10 digits</div>
+                    </div>
+                    
+                    <div class="form-field" id="email-message-field">
+                        <textarea id="email-message" name="message" rows="4" placeholder="How can we help you?" class="form-input w-full text-white resize-none" required></textarea>
+                    </div>
+                    
+                    <div class="form-field" id="email-urgency-field">
+                        <div class="mb-4">
+                            <label class="text-white text-sm mb-3 block">How urgent is this request?</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <button type="button" class="urgency-option p-3 border border-gray-600 rounded-lg text-center transition-all hover:border-white" data-urgency="Standard">
+                                    <div class="text-sm font-medium text-white">Standard</div>
+                                    <div class="text-xs text-gray-400 mt-1">Within 2 weeks</div>
+                                </button>
+                                <button type="button" class="urgency-option p-3 border border-gray-600 rounded-lg text-center transition-all hover:border-white" data-urgency="Priority">
+                                    <div class="text-sm font-medium text-white">Priority</div>
+                                    <div class="text-xs text-gray-400 mt-1">This week</div>
+                                </button>
+                                <button type="button" class="urgency-option p-3 border border-gray-600 rounded-lg text-center transition-all hover:border-white" data-urgency="Urgent">
+                                    <div class="text-sm font-medium text-white">Urgent</div>
+                                    <div class="text-xs text-gray-400 mt-1">ASAP</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-field" id="email-submit-field">
+                        <button type="button" id="draft-email-submit-btn" class="btn-primary font-medium py-3 px-8 rounded-lg mt-6 w-full">
+                            Open in Mail App
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Country Dropdown Portal (rendered outside modal) -->
+        <div id="country-dropdown" class="hidden country-dropdown-portal">
+            <input type="text" id="country-search" placeholder="Search countries..." class="w-full text-white text-sm focus:outline-none">
+            <div id="country-list">
+                <div class="country-option" data-code="+1" data-flag="🇨🇦">🇨🇦 Canada (+1)</div>
+                <div class="country-option" data-code="+1" data-flag="🇺🇸">🇺🇸 United States (+1)</div>
+                <div class="country-option" data-code="+44" data-flag="🇬🇧">🇬🇧 United Kingdom (+44)</div>
+                <div class="country-option" data-code="+61" data-flag="🇦🇺">🇦🇺 Australia (+61)</div>
+                <div class="country-option" data-code="+49" data-flag="🇩🇪">🇩🇪 Germany (+49)</div>
+                <div class="country-option" data-code="+33" data-flag="🇫🇷">🇫🇷 France (+33)</div>
+                <div class="country-option" data-code="+81" data-flag="🇯🇵">🇯🇵 Japan (+81)</div>
+                <div class="country-option" data-code="+86" data-flag="🇨🇳">🇨🇳 China (+86)</div>
+                <div class="country-option" data-code="+91" data-flag="🇮🇳">🇮🇳 India (+91)</div>
+                <div class="country-option" data-code="+55" data-flag="🇧🇷">🇧🇷 Brazil (+55)</div>
+                <div class="country-option" data-code="+52" data-flag="🇲🇽">🇲🇽 Mexico (+52)</div>
+                <div class="country-option" data-code="+7" data-flag="🇷🇺">🇷🇺 Russia (+7)</div>
+                <div class="country-option" data-code="+27" data-flag="🇿🇦">🇿🇦 South Africa (+27)</div>
+                <div class="country-option" data-code="+82" data-flag="🇰🇷">🇰🇷 South Korea (+82)</div>
+                <div class="country-option" data-code="+39" data-flag="🇮🇹">🇮🇹 Italy (+39)</div>
+                <div class="country-option" data-code="+34" data-flag="🇪🇸">🇪🇸 Spain (+34)</div>
+                <div class="country-option" data-code="+31" data-flag="🇳🇱">🇳🇱 Netherlands (+31)</div>
+                <div class="country-option" data-code="+46" data-flag="🇸🇪">🇸🇪 Sweden (+46)</div>
+                <div class="country-option" data-code="+47" data-flag="🇳🇴">🇳🇴 Norway (+47)</div>
+                <div class="country-option" data-code="+234" data-flag="🇳🇬">🇳🇬 Nigeria (+234)</div>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -750,38 +994,44 @@
                 </div>
                  <div>
                     <h4 class="font-bold text-white mb-4">Contact</h4>
-                     <a href="#contact" class="bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700">Get In Touch</a>
+                    <ul class="space-y-3">
+                        <li><a href="javascript:void(0)" id="draft-email-btn" class="hover:text-white text-sm flex items-center cursor-pointer">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            Draft Email
+                        </a></li>
+                        <li><a href="https://www.linkedin.com/in/bodunwa-bod-idris" target="_blank" rel="noopener noreferrer" class="hover:text-white text-sm flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                            LinkedIn
+                        </a></li>
+                        <li><a href="https://www.instagram.com/pastorbodidris/?hl=en" target="_blank" rel="noopener noreferrer" class="hover:text-white text-sm flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                            Instagram
+                        </a></li>
+                        <li><a href="#contact" class="hover:text-white text-sm flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                            </svg>
+                            Schedule Meeting
+                        </a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="mt-16 pt-8 border-t border-gray-900 flex flex-col sm:flex-row justify-between items-center text-gray-500">
+            <div class="mt-16 pt-8 border-t border-gray-900 flex justify-center items-center text-gray-500">
                 <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
                     <p>&copy; <span id="year"></span> Bodunwa Idris. All Rights Reserved.</p>
                     <a href="https://www.instagram.com/mrwopara/" target="_blank" rel="noopener noreferrer" class="text-sm hover:text-white">website by chim</a>
-                </div>
-                <div class="flex space-x-6 mt-4 sm:mt-0">
-                    <a href="https://www.instagram.com/pastorbodidris/?hl=en" target="_blank" rel="noopener noreferrer" class="hover:text-white">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    </a>
-                    <a href="https://www.facebook.com/PstBODIDRIS/" target="_blank" rel="noopener noreferrer" class="hover:text-white">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/bodunwa-bod-idris" target="_blank" rel="noopener noreferrer" class="hover:text-white">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                    </a>
-                     <a href="mailto:bodunwa@gmail.com" class="hover:text-white">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    </a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Calendly API Credentials
-        const CALENDLY_CLIENT_ID = 'V9SH2VOd50ZSV8qdTbOzfuDyIbWrUtoU24RRuiCnaRY';
-        const CALENDLY_CLIENT_SECRET = 'rD1qJ6eotwNT5ZPHh27_PTeYW0V2OGUhpx1ThdcsR7I';
-        const CALENDLY_WEBHOOK_SIGNING_KEY = ''; // You'll get this when setting up webhooks
-        
         // Wrap everything in try-catch and DOM ready
         document.addEventListener('DOMContentLoaded', function() {
             try {
@@ -791,8 +1041,11 @@
                 // Set current year in footer
                 initializeFooter();
                 
-                // Progressive form functionality
-                initializeForm();
+                // Load Calendly widget immediately in contact section
+                initializeCalendly();
+                
+                // Draft email modal functionality
+                initializeDraftEmailModal();
                 
             } catch (e) {
                 console.error('Script initialization error:', e);
@@ -864,235 +1117,453 @@
             }
         }
 
-        function initializeForm() {
+        function initializeCalendly() {
             try {
-                const nameField = document.getElementById('name');
-                const emailField = document.getElementById('email');
-                const phoneField = document.getElementById('phone');
-                const messageField = document.getElementById('message');
-                const nameFieldContainer = document.getElementById('name-field');
-                const emailFieldContainer = document.getElementById('email-field');
-                const phoneFieldContainer = document.getElementById('phone-field');
-                const messageFieldContainer = document.getElementById('message-field');
-                const calendlyFieldContainer = document.getElementById('calendly-field');
-                const submitFieldContainer = document.getElementById('submit-field');
-                const scheduleBtn = document.getElementById('schedule-btn');
-                const consultationForm = document.getElementById('consultation-form');
-                const formSuccessMessage = document.getElementById('form-success');
+                // Load Calendly widget immediately in the contact section
+                const calendlyWidget = document.querySelector('#contact .calendly-inline-widget');
+                if (calendlyWidget) {
+                    let calendlyUrl = calendlyWidget.getAttribute('data-url');
+                    
+                    if (!calendlyUrl || calendlyUrl === 'YOUR_CALENDLY_URL_HERE') {
+                        calendlyWidget.innerHTML = `
+                            <div class="text-white text-center p-8 border border-gray-600 rounded-lg">
+                                <h3 class="text-xl mb-4">📅 Calendar Setup Needed</h3>
+                                <p class="text-gray-300">Please update the Calendly URL in the code with your actual scheduling link.</p>
+                                <p class="text-sm text-gray-400 mt-2">Find this in your Calendly dashboard and replace "YOUR_CALENDLY_URL_HERE"</p>
+                            </div>`;
+                        return;
+                    }
+                    
+                    // Add embed parameters for Calendly
+                    const separator = calendlyUrl.includes('?') ? '&' : '?';
+                    const finalUrl = calendlyUrl + separator + 'embed_domain=' + encodeURIComponent(window.location.hostname) + '&embed_type=Inline';
+                    
+                    calendlyWidget.innerHTML = `
+                        <iframe src="${finalUrl}" 
+                                width="100%" 
+                                height="900" 
+                                frameborder="0" 
+                                scrolling="auto"
+                                style="border-radius: 12px; overflow: hidden; display: block;">
+                        </iframe>`;
+                }
+            } catch (e) {
+                console.error('Calendly initialization error:', e);
+            }
+        }
+
+        function initializeDraftEmailModal() {
+            try {
+                const draftEmailBtn = document.getElementById('draft-email-btn');
+                const modal = document.getElementById('draft-email-modal');
+                const closeModalBtn = document.getElementById('close-modal-btn');
+                
+                // Modal form elements
+                const emailNameField = document.getElementById('email-name');
+                const emailEmailField = document.getElementById('email-email');
+                const emailPhoneField = document.getElementById('email-phone');
+                const emailMessageField = document.getElementById('email-message');
+                
+                // Modal form containers
+                const emailNameFieldContainer = document.getElementById('email-name-field');
+                const emailEmailFieldContainer = document.getElementById('email-email-field');
+                const emailPhoneFieldContainer = document.getElementById('email-phone-field');
+                const emailMessageFieldContainer = document.getElementById('email-message-field');
+                const emailUrgencyFieldContainer = document.getElementById('email-urgency-field');
+                const emailSubmitFieldContainer = document.getElementById('email-submit-field');
+                const draftEmailSubmitBtn = document.getElementById('draft-email-submit-btn');
+                const emailFormSuccess = document.getElementById('email-form-success');
+
+                // Modal container for height adjustments
+                const modalContainer = document.getElementById('draft-email-container');
+
+                // Country selector elements
+                const countrySelector = document.getElementById('country-selector');
+                const countryDropdown = document.getElementById('country-dropdown');
+                const countrySearch = document.getElementById('country-search');
+                const countryOptions = document.querySelectorAll('.country-option');
+                const selectedCountryDisplay = document.getElementById('selected-country');
+                const phoneError = document.getElementById('phone-error');
+
+                // Urgency selector elements
+                const urgencyOptions = document.querySelectorAll('.urgency-option');
+
+                let selectedCountryCode = '+1'; // Default to Canada
+                let selectedUrgency = '';
+
+                if (!draftEmailBtn || !modal || !closeModalBtn) {
+                    console.warn('Some draft email modal elements not found');
+                    return;
+                }
+
+                // Helper function to position dropdown
+                function positionDropdown() {
+                    if (!countrySelector || !countryDropdown) return;
+                    
+                    const rect = countrySelector.getBoundingClientRect();
+                    countryDropdown.style.top = (rect.bottom + 4) + 'px';
+                    countryDropdown.style.left = rect.left + 'px';
+                }
 
                 // Helper functions
                 function showField(fieldContainer) {
-                    try {
-                        if (fieldContainer) {
-                            fieldContainer.classList.add('active');
-                            fieldContainer.offsetHeight; // Force reflow
-                        }
-                    } catch (e) {
-                        console.error('Show field error:', e);
+                    if (fieldContainer) {
+                        fieldContainer.classList.add('active');
+                        fieldContainer.offsetHeight; // Force reflow
                     }
                 }
 
                 function hideField(fieldContainer) {
-                    try {
-                        if (fieldContainer) {
-                            fieldContainer.classList.remove('active');
-                        }
-                    } catch (e) {
-                        console.error('Hide field error:', e);
+                    if (fieldContainer) {
+                        fieldContainer.classList.remove('active');
                     }
                 }
 
                 function isValidEmail(email) {
-                    try {
-                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        return emailRegex.test(email);
-                    } catch (e) {
-                        console.error('Email validation error:', e);
-                        return false;
-                    }
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return emailRegex.test(email);
                 }
 
-                function loadCalendlyWidget() {
-                    try {
-                        const calendlyWidget = document.querySelector('.calendly-inline-widget');
-                        if (calendlyWidget && !calendlyWidget.querySelector('iframe')) {
-                            let calendlyUrl = calendlyWidget.getAttribute('data-url');
-                            
-                            if (!calendlyUrl || calendlyUrl === 'YOUR_CALENDLY_URL_HERE') {
-                                calendlyWidget.innerHTML = `
-                                    <div class="text-white text-center p-8 border border-gray-600 rounded-lg">
-                                        <h3 class="text-xl mb-4">📅 Calendar Setup Needed</h3>
-                                        <p class="text-gray-300">Please update the Calendly URL in the code with your actual scheduling link.</p>
-                                        <p class="text-sm text-gray-400 mt-2">Find this in your Calendly dashboard and replace "YOUR_CALENDLY_URL_HERE"</p>
-                                    </div>`;
-                                return;
-                            }
-                            
-                            calendlyWidget.innerHTML = `
-                                <iframe src="${calendlyUrl}?embed_domain=${window.location.hostname}&embed_type=Inline" 
-                                        width="100%" 
-                                        height="700" 
-                                        frameborder="0" 
-                                        scrolling="no"
-                                        onerror="this.style.display='none'">
-                                </iframe>`;
-                        }
-                    } catch (e) {
-                        console.error('Calendly widget error:', e);
-                        const calendlyWidget = document.querySelector('.calendly-inline-widget');
-                        if (calendlyWidget) {
-                            calendlyWidget.innerHTML = `
-                                <div class="text-white text-center p-8 border border-gray-600 rounded-lg">
-                                    <p class="text-gray-300">Unable to load calendar. Please try again later.</p>
-                                </div>`;
-                        }
-                    }
+                function isValidPhone(phone) {
+                    // Remove all non-digit characters
+                    const digitsOnly = phone.replace(/\D/g, '');
+                    return digitsOnly.length >= 10;
                 }
 
-                // Field event handlers
-                if (nameField) {
-                    nameField.addEventListener('input', function() {
-                        try {
-                            const value = this.value.trim();
-                            if (value.length > 2) {
-                                showField(emailFieldContainer);
-                            } else {
-                                hideField(emailFieldContainer);
-                                hideField(phoneFieldContainer);
-                                hideField(messageFieldContainer);
-                                hideField(calendlyFieldContainer);
-                                hideField(submitFieldContainer);
-                                if (emailField) emailField.value = '';
-                                if (phoneField) phoneField.value = '';
-                                if (messageField) messageField.value = '';
-                            }
-                        } catch (e) {
-                            console.error('Name field error:', e);
+                // Country selector functionality
+                if (countrySelector && countryDropdown) {
+                    countrySelector.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const isCurrentlyHidden = countryDropdown.classList.contains('hidden');
+                        
+                        if (isCurrentlyHidden) {
+                            positionDropdown();
+                            countryDropdown.classList.remove('hidden');
+                            countrySearch.focus();
+                        } else {
+                            countryDropdown.classList.add('hidden');
                         }
+                    });
+
+                    // Reposition dropdown on window resize/scroll
+                    window.addEventListener('resize', function() {
+                        if (!countryDropdown.classList.contains('hidden')) {
+                            positionDropdown();
+                        }
+                    });
+                    
+                    window.addEventListener('scroll', function() {
+                        if (!countryDropdown.classList.contains('hidden')) {
+                            positionDropdown();
+                        }
+                    });
+
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function(e) {
+                        if (!countrySelector.contains(e.target) && !countryDropdown.contains(e.target)) {
+                            countryDropdown.classList.add('hidden');
+                        }
+                    });
+
+                    // Search functionality
+                    if (countrySearch) {
+                        countrySearch.addEventListener('input', function() {
+                            const searchTerm = this.value.toLowerCase();
+                            let visibleCount = 0;
+                            countryOptions.forEach(option => {
+                                const text = option.textContent.toLowerCase();
+                                if (text.includes(searchTerm)) {
+                                    option.style.display = 'flex';
+                                    visibleCount++;
+                                } else {
+                                    option.style.display = 'none';
+                                }
+                            });
+                            
+                            // Keep dropdown visible if there are results
+                            if (visibleCount > 0) {
+                                countryDropdown.classList.remove('hidden');
+                                positionDropdown();
+                            }
+                        });
+                    }
+
+                    // Country selection
+                    countryOptions.forEach(option => {
+                        option.addEventListener('click', function() {
+                            const countryCode = this.getAttribute('data-code');
+                            const countryFlag = this.getAttribute('data-flag');
+                            selectedCountryCode = countryCode;
+                            selectedCountryDisplay.textContent = `${countryFlag} ${countryCode}`;
+                            countryDropdown.classList.add('hidden');
+                            countrySearch.value = '';
+                            // Reset search filter
+                            countryOptions.forEach(opt => opt.style.display = 'flex');
+                            // Revalidate phone if already entered
+                            if (emailPhoneField && emailPhoneField.value.trim()) {
+                                handlePhoneInput();
+                            }
+                        });
                     });
                 }
 
-                if (emailField) {
-                    function handleEmailInput() {
-                        try {
-                            const value = emailField.value.trim();
-                            if (isValidEmail(value)) {
-                                showField(phoneFieldContainer);
-                            } else {
-                                hideField(phoneFieldContainer);
-                                hideField(messageFieldContainer);
-                                hideField(calendlyFieldContainer);
-                                hideField(submitFieldContainer);
-                                if (phoneField) phoneField.value = '';
-                                if (messageField) messageField.value = '';
-                            }
-                        } catch (e) {
-                            console.error('Email field error:', e);
-                        }
-                    }
-
-                    emailField.addEventListener('input', handleEmailInput);
-                    emailField.addEventListener('keyup', handleEmailInput);
-                    emailField.addEventListener('change', handleEmailInput);
-                }
-
-                if (phoneField) {
-                    function handlePhoneInput() {
-                        try {
-                            const value = phoneField.value.trim();
-                            if (value.length > 0) {
-                                showField(messageFieldContainer);
-                            } else {
-                                hideField(messageFieldContainer);
-                                hideField(calendlyFieldContainer);
-                                hideField(submitFieldContainer);
-                                if (messageField) messageField.value = '';
-                            }
-                        } catch (e) {
-                            console.error('Phone field error:', e);
-                        }
-                    }
-
-                    phoneField.addEventListener('input', handlePhoneInput);
-                    phoneField.addEventListener('keyup', handlePhoneInput);
-                    phoneField.addEventListener('change', handlePhoneInput);
-                }
-
-                if (messageField) {
-                    function handleMessageInput() {
-                        try {
-                            const value = messageField.value.trim();
-                            if (value.length > 10) {
-                                showField(submitFieldContainer);
-                            } else {
-                                hideField(submitFieldContainer);
-                                hideField(calendlyFieldContainer);
-                            }
-                        } catch (e) {
-                            console.error('Message field error:', e);
-                        }
-                    }
-
-                    messageField.addEventListener('input', handleMessageInput);
-                    messageField.addEventListener('keyup', handleMessageInput);
-                    messageField.addEventListener('change', handleMessageInput);
-                }
-
-                if (scheduleBtn) {
-                    scheduleBtn.addEventListener('click', function(e) {
-                        try {
-                            e.preventDefault();
-                            
-                            const nameValue = nameField ? nameField.value.trim() : '';
-                            const emailValue = emailField ? emailField.value.trim() : '';
-                            const phoneValue = phoneField ? phoneField.value.trim() : '';
-                            const messageValue = messageField ? messageField.value.trim() : '';
-                            
-                            if (nameValue.length > 2 && isValidEmail(emailValue) && phoneValue.length > 0 && messageValue.length > 10) {
-                                showField(calendlyFieldContainer);
-                                loadCalendlyWidget();
-                                
-                                hideField(submitFieldContainer);
-                                if (formSuccessMessage) {
-                                    formSuccessMessage.innerHTML = '<p>Great! Please pick your preferred time below:</p>';
-                                    formSuccessMessage.classList.remove('hidden');
-                                }
-                            } else {
-                                alert('Please fill out all fields correctly before scheduling.');
-                            }
-                        } catch (e) {
-                            console.error('Schedule button error:', e);
-                        }
+                // Urgency selector functionality
+                urgencyOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        // Remove active state from all options
+                        urgencyOptions.forEach(opt => {
+                            opt.classList.remove('border-white', 'bg-gray-800');
+                            opt.classList.add('border-gray-600');
+                        });
+                        
+                        // Add active state to selected option
+                        this.classList.remove('border-gray-600');
+                        this.classList.add('border-white', 'bg-gray-800');
+                        
+                        selectedUrgency = this.getAttribute('data-urgency');
+                        
+                        // Check if we can show submit button
+                        checkFormCompletion();
                     });
-                }
-
-                // Listen for Calendly events
-                window.addEventListener('message', function(e) {
-                    try {
-                        if (e.origin === 'https://calendly.com' && e.data.event) {
-                            if (e.data.event === 'calendly.event_scheduled') {
-                                if (formSuccessMessage) {
-                                    formSuccessMessage.innerHTML = '<p>🎉 Perfect! Your consultation has been scheduled. I will send you a confirmation email shortly.</p>';
-                                    
-                                    setTimeout(() => {
-                                        if (consultationForm) consultationForm.reset();
-                                        hideField(emailFieldContainer);
-                                        hideField(phoneFieldContainer);
-                                        hideField(messageFieldContainer);
-                                        hideField(calendlyFieldContainer);
-                                        hideField(submitFieldContainer);
-                                        if (formSuccessMessage) formSuccessMessage.classList.add('hidden');
-                                    }, 5000);
-                                }
-                            }
-                        }
-                    } catch (e) {
-                        console.error('Calendly message error:', e);
-                    }
                 });
 
+                function checkFormCompletion() {
+                    const nameValue = emailNameField ? emailNameField.value.trim() : '';
+                    const emailValue = emailEmailField ? emailEmailField.value.trim() : '';
+                    const phoneValue = emailPhoneField ? emailPhoneField.value.trim() : '';
+                    const messageValue = emailMessageField ? emailMessageField.value.trim() : '';
+                    
+                    if (nameValue.length > 2 && 
+                        isValidEmail(emailValue) && 
+                        isValidPhone(phoneValue) && 
+                        messageValue.length > 10 && 
+                        selectedUrgency) {
+                        showField(emailSubmitFieldContainer);
+                    } else {
+                        hideField(emailSubmitFieldContainer);
+                    }
+                }
+
+                // Open modal
+                draftEmailBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+
+                // Close modal
+                function closeModal() {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                    // Reset form
+                    const form = document.getElementById('email-draft-form');
+                    if (form) form.reset();
+                    hideField(emailEmailFieldContainer);
+                    hideField(emailPhoneFieldContainer);
+                    hideField(emailMessageFieldContainer);
+                    hideField(emailUrgencyFieldContainer);
+                    hideField(emailSubmitFieldContainer);
+                    if (emailFormSuccess) emailFormSuccess.classList.add('hidden');
+                    if (phoneError) phoneError.classList.add('hidden');
+                    if (countryDropdown) countryDropdown.classList.add('hidden');
+                    
+                    // Reset urgency selection
+                    urgencyOptions.forEach(opt => {
+                        opt.classList.remove('border-white', 'bg-gray-800');
+                        opt.classList.add('border-gray-600');
+                    });
+                    selectedUrgency = '';
+                }
+
+                closeModalBtn.addEventListener('click', closeModal);
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) closeModal();
+                });
+
+                // Progressive form logic
+                if (emailNameField) {
+                    emailNameField.addEventListener('input', function() {
+                        const value = this.value.trim();
+                        if (value.length > 2) {
+                            showField(emailEmailFieldContainer);
+                        } else {
+                            hideField(emailEmailFieldContainer);
+                            hideField(emailPhoneFieldContainer);
+                            hideField(emailMessageFieldContainer);
+                            hideField(emailUrgencyFieldContainer);
+                            hideField(emailSubmitFieldContainer);
+                            if (emailEmailField) emailEmailField.value = '';
+                            if (emailPhoneField) emailPhoneField.value = '';
+                            if (emailMessageField) emailMessageField.value = '';
+                            selectedUrgency = '';
+                            urgencyOptions.forEach(opt => {
+                                opt.classList.remove('border-white', 'bg-gray-800');
+                                opt.classList.add('border-gray-600');
+                            });
+                        }
+                    });
+                }
+
+                if (emailEmailField) {
+                    function handleEmailInput() {
+                        const value = emailEmailField.value.trim();
+                        if (isValidEmail(value)) {
+                            showField(emailPhoneFieldContainer);
+                        } else {
+                            hideField(emailPhoneFieldContainer);
+                            hideField(emailMessageFieldContainer);
+                            hideField(emailUrgencyFieldContainer);
+                            hideField(emailSubmitFieldContainer);
+                            if (emailPhoneField) emailPhoneField.value = '';
+                            if (emailMessageField) emailMessageField.value = '';
+                            selectedUrgency = '';
+                            urgencyOptions.forEach(opt => {
+                                opt.classList.remove('border-white', 'bg-gray-800');
+                                opt.classList.add('border-gray-600');
+                            });
+                        }
+                    }
+
+                    emailEmailField.addEventListener('input', handleEmailInput);
+                    emailEmailField.addEventListener('keyup', handleEmailInput);
+                    emailEmailField.addEventListener('change', handleEmailInput);
+                }
+
+                if (emailPhoneField) {
+                    function handlePhoneInput() {
+                        const value = emailPhoneField.value.trim();
+                        const isValid = isValidPhone(value);
+                        
+                        if (phoneError) {
+                            if (value.length > 0 && !isValid) {
+                                phoneError.classList.remove('hidden');
+                            } else {
+                                phoneError.classList.add('hidden');
+                            }
+                        }
+                        
+                        if (isValid) {
+                            showField(emailMessageFieldContainer);
+                        } else {
+                            hideField(emailMessageFieldContainer);
+                            hideField(emailUrgencyFieldContainer);
+                            hideField(emailSubmitFieldContainer);
+                            if (emailMessageField) emailMessageField.value = '';
+                            selectedUrgency = '';
+                            urgencyOptions.forEach(opt => {
+                                opt.classList.remove('border-white', 'bg-gray-800');
+                                opt.classList.add('border-gray-600');
+                            });
+                        }
+                    }
+
+                    emailPhoneField.addEventListener('input', handlePhoneInput);
+                    emailPhoneField.addEventListener('keyup', handlePhoneInput);
+                    emailPhoneField.addEventListener('change', handlePhoneInput);
+                }
+
+                if (emailMessageField) {
+                    function handleMessageInput() {
+                        const value = emailMessageField.value.trim();
+                        if (value.length > 10) {
+                            showField(emailUrgencyFieldContainer);
+                        } else {
+                            hideField(emailUrgencyFieldContainer);
+                            hideField(emailSubmitFieldContainer);
+                            selectedUrgency = '';
+                            urgencyOptions.forEach(opt => {
+                                opt.classList.remove('border-white', 'bg-gray-800');
+                                opt.classList.add('border-gray-600');
+                            });
+                        }
+                    }
+
+                    emailMessageField.addEventListener('input', handleMessageInput);
+                    emailMessageField.addEventListener('keyup', handleMessageInput);
+                    emailMessageField.addEventListener('change', handleMessageInput);
+                }
+
+                // Draft email functionality
+                if (draftEmailSubmitBtn) {
+                    draftEmailSubmitBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const nameValue = emailNameField ? emailNameField.value.trim() : '';
+                        const emailValue = emailEmailField ? emailEmailField.value.trim() : '';
+                        const phoneValue = emailPhoneField ? emailPhoneField.value.trim() : '';
+                        const messageValue = emailMessageField ? emailMessageField.value.trim() : '';
+                        
+                        if (nameValue.length > 2 && 
+                            isValidEmail(emailValue) && 
+                            isValidPhone(phoneValue) && 
+                            messageValue.length > 10 && 
+                            selectedUrgency) {
+                            
+                            // Format phone number with country code
+                            const formattedPhone = `${selectedCountryCode} ${phoneValue}`;
+                            
+                            // Create email content with urgency
+                            const subject = `${selectedUrgency} Consultation Request from ${nameValue}`;
+                            
+                            const emailBody = `Hello Bod,
+
+I hope this email finds you well. I would like to discuss the following:
+
+${messageValue}
+
+Please feel free to contact me:
+Email: ${emailValue}
+Phone: ${formattedPhone}
+
+Urgency Level: ${selectedUrgency}
+
+I look forward to hearing from you.
+
+Best regards,
+${nameValue}`;
+                            
+                            // Create mailto link with proper encoding
+                            const mailtoLink = `mailto:bodunwa@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+                            
+                            // Open email client
+                            try {
+                                window.open(mailtoLink, '_self');
+                                
+                                // Show success message
+                                if (emailFormSuccess) {
+                                    emailFormSuccess.innerHTML = '<p>✅ Email draft opened in your default email client!</p>';
+                                    emailFormSuccess.classList.remove('hidden');
+                                }
+                                
+                                // Close modal after delay
+                                setTimeout(() => {
+                                    closeModal();
+                                }, 2000);
+                                
+                            } catch (error) {
+                                console.error('Error opening email client:', error);
+                                // Fallback method
+                                window.location.href = mailtoLink;
+                                
+                                if (emailFormSuccess) {
+                                    emailFormSuccess.innerHTML = '<p>✅ Email draft created successfully!</p>';
+                                    emailFormSuccess.classList.remove('hidden');
+                                }
+                                
+                                setTimeout(() => {
+                                    closeModal();
+                                }, 2000);
+                            }
+                            
+                        } else {
+                            alert('Please fill out all fields correctly and select urgency level before drafting the email.');
+                        }
+                    });
+                }
+
             } catch (e) {
-                console.error('Form initialization error:', e);
+                console.error('Draft email modal initialization error:', e);
             }
         }
     </script>
