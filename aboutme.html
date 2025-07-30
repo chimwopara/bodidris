@@ -105,6 +105,8 @@
             display: flex;
             gap: 1.5rem;
             padding-bottom: 1rem;
+            padding-left: 1.5rem; /* Added for left margin */
+            padding-right: 1.5rem; /* Added for right margin */
         }
         
         /* Mobile - disable auto-scroll, enable manual scroll */
@@ -555,21 +557,29 @@
             }
         }
 
-        /* Styles from index.html for modal and form */
+        /* MODIFIED: Styles for modal and form for better mobile experience */
         #draft-email-modal {
             backdrop-filter: blur(8px);
+            /* Allows the modal background to be scrolled if content (like an open keyboard) makes it too tall for the viewport */
+            overflow-y: auto;
         }
         
         #draft-email-container {
             min-height: auto;
-            max-height: none;
-            height: auto;
-            overflow: visible !important;
+            /* Set a max-height relative to the viewport and allow internal scrolling */
+            max-height: 90vh; 
+            overflow-y: auto;
             position: relative;
         }
         
+        /* MODIFIED: This is the key fix to make the textarea scrollable */
+        #email-message {
+            overflow-y: auto !important;
+        }
+
         #email-message-field.active {
-            max-height: 140px;
+            /* MODIFIED: Increased height for better usability */
+            max-height: 250px;
         }
 
         #email-urgency-field.active {
@@ -808,11 +818,10 @@
 
         <!-- Testimonials Section -->
         <section id="testimonials" class="py-24 bg-gray-900">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">What Some Say</h2>
-                    <p class="text-gray-400 text-lg">Voices from leaders who've experienced the transformation</p>
-                </div>
+    <div class="text-center mb-16 px-6">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">What Some Say</h2>
+        <p class="text-gray-400 text-lg">Voices from leaders who've experienced the transformation</p>
+    </div>
                 
                 <div class="testimonials-container">
                     <div class="testimonials-track">
@@ -1068,7 +1077,8 @@
         </section>
 
         <!-- Draft Email Modal -->
-        <div id="draft-email-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
+        <!-- MODIFIED: Changed items-center to items-start sm:items-center for better mobile keyboard handling -->
+        <div id="draft-email-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex items-start sm:items-center justify-center p-4">
             <div id="draft-email-container" class="bg-black border border-gray-700 rounded-xl p-6 max-w-3xl w-full transition-all duration-300 ease-in-out relative">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-3xl font-bold text-white">Draft Email</h2>
@@ -1108,7 +1118,7 @@
                     </div>
                     
                     <div class="form-field" id="email-message-field">
-                        <textarea id="email-message" name="message" rows="4" placeholder="How can we help you?" class="form-input w-full text-white resize-none" required></textarea>
+                        <textarea id="email-message" name="message" rows="4" placeholder="How can we help you?" class="form-input w-full text-white" required></textarea>
                     </div>
                     
                     <div class="form-field" id="email-urgency-field">
@@ -1194,7 +1204,7 @@
 <div class="country-option" data-code="+1" data-flag="🇩🇲">🇩🇲 Dominica (+1)</div>
 <div class="country-option" data-code="+1" data-flag="🇩🇴">🇩🇴 Dominican Republic (+1)</div>
 <div class="country-option" data-code="+670" data-flag="🇹🇱">🇹🇱 East Timor (+670)</div>
-<div class="country-option" data-code="+593" data-flag="🇪🇨">🇪🇨 Ecuador (+593)</div>
+<div class="country-option" data-code="+593" data-flag="?🇨">🇪🇨 Ecuador (+593)</div>
 <div class="country-option" data-code="+20" data-flag="🇪🇬">🇪🇬 Egypt (+20)</div>
 <div class="country-option" data-code="+503" data-flag="🇸🇻">🇸🇻 El Salvador (+503)</div>
 <div class="country-option" data-code="+240" data-flag="🇬🇶">🇬🇶 Equatorial Guinea (+240)</div>
@@ -1346,7 +1356,7 @@
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-gray-400">
                 <div class="col-span-2 md:col-span-1">
-                     <a href="index.html" class="text-2xl font-bold tracking-wider text-white">BOD IDRIS</a>
+                       <a href="index.html" class="text-2xl font-bold tracking-wider text-white">BOD IDRIS</a>
                 </div>
                 <div>
                     <h4 class="font-bold text-white mb-4">About Me</h4>
