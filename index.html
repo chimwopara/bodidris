@@ -78,11 +78,7 @@
                 max-width: 100vw;
             }
             
-            /* Make hamburger menu black on mobile */
-            #mobile-menu-btn {
-                color: black !important;
-                mix-blend-mode: normal !important;
-            }
+            
             
             /* Hero section mobile optimization */
             .hero-section {
@@ -269,26 +265,51 @@
             }
         }
         
-        /* Desktop text shadows for black text */
+       /* Desktop text styling - clean and professional */
         @media (min-width: 641px) {
             .hero-section h1 {
                 color: black !important;
                 text-align: left !important;
+                text-shadow: none !important;
+                font-weight: 700 !important;
+                letter-spacing: -0.025em !important;
             }
             
             .hero-section p {
-                color: #1f2937 !important; /* gray-800 */
+                color: #374151 !important; /* gray-700 */
                 text-align: left !important;
+                text-shadow: none !important;
+                font-weight: 500 !important;
             }
             
             .hero-section a {
                 color: black !important;
-                border: 1px solid black !important;
+                border: 2px solid black !important;
+                text-shadow: none !important;
+                font-weight: 600 !important;
+                transition: all 0.2s ease !important;
             }
             
             .hero-section a:hover {
                 background-color: black !important;
                 color: white !important;
+                transform: translateY(-1px) !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+            }
+        }
+        
+        /* Keep mobile text shadows for readability */
+        @media (max-width: 640px) {
+            .hero-section h1 {
+                text-shadow: 2px 2px 8px rgba(0,0,0,0.8) !important;
+            }
+            
+            .hero-section p {
+                text-shadow: 1px 1px 4px rgba(0,0,0,0.8) !important;
+            }
+            
+            .hero-section a {
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.6) !important;
             }
         }
         
@@ -315,6 +336,23 @@
         .menu-link:hover {
             color: #FBBF24; /* Amber-400 for hover */
         }
+        
+        /* Hamburger menu scroll effects */
+        #open-menu-button, #mobile-menu-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .header-scrolled #open-menu-button,
+        .header-scrolled #mobile-menu-btn {
+            color: white !important;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+            mix-blend-mode: normal !important;
+        }
+        
+        .header-scrolled #open-menu-button svg,
+        .header-scrolled #mobile-menu-btn svg {
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+        }
 
         .card-border {
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -322,6 +360,23 @@
         }
         .card-border:hover {
             border-color: rgba(251, 191, 36, 0.5);
+        }
+        
+        /* Hamburger menu scroll effects */
+        #open-menu-button, #mobile-menu-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .header-scrolled #open-menu-button,
+        .header-scrolled #mobile-menu-btn {
+            color: white !important;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+            mix-blend-mode: normal !important;
+        }
+        
+        .header-scrolled #open-menu-button svg,
+        .header-scrolled #mobile-menu-btn svg {
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
         }
         .form-input {
             background-color: transparent;
@@ -643,6 +698,26 @@
             border: none;
             display: block;
         }
+        /* Header scroll effects */
+header {
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+header.scrolled {
+    background-color: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(12px);
+}
+
+
+/* Ensure proper z-index */
+header {
+    position: relative;
+}
+
+header .container {
+    position: relative;
+    z-index: 31;
+}
     </style>
 </head>
 <body class="antialiased">
@@ -664,7 +739,7 @@
     </div>
 
     <!-- Header & Navigation -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-30">
+    <header id="header" class="fixed top-0 left-0 right-0 z-30 bg-black bg-opacity-90 backdrop-blur-sm">
         <div class="container mx-auto px-6 py-5 flex justify-between items-center">
             <!-- Left aligned logo -->
             <a href="/" class="logo">
@@ -673,18 +748,19 @@
             
             <div class="flex items-center space-x-4">
                 <!-- Desktop menu button -->
-                <button id="open-menu-button" class="hidden md:block text-black mix-blend-difference">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-                
-                <!-- Mobile menu button -->
-                <button id="mobile-menu-btn" class="md:hidden text-black">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
+<button id="open-menu-button" class="hidden md:block text-white">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+</button>
+
+<!-- Mobile menu button -->
+<button id="mobile-menu-btn" class="md:hidden text-white">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+</button>
+                    
         
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-95 backdrop-blur-sm">
@@ -706,13 +782,13 @@
                         <div class="absolute inset-0 bg-black bg-opacity-60 rounded-2xl -z-10 transform scale-110 hidden md:block"></div>
                         <div class="relative z-10 p-8">
                             
-                            <h1 class="text-5xl md:text-3xl font-bold leading-tight mb-4 text-black md:text-black" style="text-shadow: 2px 2px 4px rgba(255,255,255,0.8), -1px -1px 2px rgba(255,255,255,0.8), 1px -1px 2px rgba(255,255,255,0.8), -1px 1px 2px rgba(255,255,255,0.8);">
+                            <h1 class="text-5xl md:text-3xl font-bold leading-tight mb-4 text-black md:text-black hero-title">
                                 Management Consultant. Leader. Coach. Public Speaker
                             </h1>
-                            <p class="text-lg md:text-xl text-gray-800 md:text-gray-800 mb-8" style="text-shadow: 1px 1px 3px rgba(255,255,255,0.9), -1px -1px 2px rgba(255,255,255,0.9), 1px -1px 2px rgba(255,255,255,0.9), -1px 1px 2px rgba(255,255,255,0.9);">
+                            <p class="text-lg md:text-xl text-gray-800 md:text-gray-800 mb-8 hero-subtitle">
                                 .....adding values, impacting lives.....
                             </p>
-                            <a href="aboutme.html" class="border border-black md:border-black text-black md:text-black font-bold py-3 px-8 rounded-lg hover:bg-black hover:text-white transition-colors" style="text-shadow: 1px 1px 2px rgba(255,255,255,0.8), -1px -1px 1px rgba(255,255,255,0.8), 1px -1px 1px rgba(255,255,255,0.8), -1px 1px 1px rgba(255,255,255,0.8);">
+                            <a href="aboutme.html" class="border border-black md:border-black text-black md:text-black font-bold py-3 px-8 rounded-lg hover:bg-black hover:text-white transition-colors hero-button">
                                 About Me
                             </a>
                         </div>
@@ -1054,7 +1130,9 @@
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-gray-400">
                 <div class="col-span-2 md:col-span-1">
-                     <a href="#" class="text-2xl font-bold tracking-wider text-white">BOD IDRIS</a>
+                     <a href="#" class="block">
+    <img src="logo.png" alt="BOD IDRIS" class="h-8 md:h-10">
+</a>
                 </div>
                 <div>
                     <h4 class="font-bold text-white mb-4">About Me</h4>
@@ -1072,13 +1150,7 @@
                         <li class="mb-2"><a href="#" class="hover:text-white">Training</a></li>
                     </ul>
                 </div>
-                 <div>
-                    <h4 class="font-bold text-white mb-4">Media</h4>
-                    <ul>
-                        <li class="mb-2"><a href="#" class="hover:text-white">Media Room</a></li>
-                        <li class="mb-2"><a href="#" class="hover:text-white">Press Kit</a></li>
-                    </ul>
-                </div>
+                 
                  <div>
                     <h4 class="font-bold text-white mb-4">Contact</h4>
                     <ul class="space-y-3">
@@ -1190,6 +1262,19 @@
                             mobileMenu.classList.add('hidden');
                         }
                     });
+                    // Close mobile menu when scrolling
+let scrollTimeout;
+window.addEventListener('scroll', function() {
+    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        // Clear existing timeout
+        clearTimeout(scrollTimeout);
+        
+        // Set a small delay to avoid closing immediately on small scrolls
+        scrollTimeout = setTimeout(() => {
+            mobileMenu.classList.add('hidden');
+        }, 150);
+    }
+});
                 }
             } catch (e) {
                 console.error('Menu initialization error:', e);
@@ -1357,6 +1442,19 @@
                             countryDropdown.classList.add('hidden');
                         }
                     });
+                    // Close mobile menu when scrolling
+let scrollTimeout;
+window.addEventListener('scroll', function() {
+    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        // Clear existing timeout
+        clearTimeout(scrollTimeout);
+        
+        // Set a small delay to avoid closing immediately on small scrolls
+        scrollTimeout = setTimeout(() => {
+            mobileMenu.classList.add('hidden');
+        }, 150);
+    }
+});
 
                     // Search functionality
                     if (countrySearch) {
