@@ -6,6 +6,7 @@
     <title>About Me - Bodunwa 'Bod' Idris</title>
     <link rel="icon" type="image/png" href="logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="countries.js"></script>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1298,12 +1299,10 @@
         </div>
         
         <!-- Country Dropdown Portal (rendered outside modal) -->
-        <div id="country-dropdown" class="hidden country-dropdown-portal">
+       <div id="country-dropdown" class="hidden country-dropdown-portal">
             <input type="text" id="country-search" placeholder="Search countries..." class="w-full text-white text-sm focus:outline-none">
             <div id="country-list">
-                <div class="country-option" data-code="+93" data-flag="🇦🇫">🇦🇫 Afghanistan (+93)</div>
-<div class="country-option" data-code="+355" data-flag="🇦🇱">🇦🇱 Albania (+355)</div>
-
+                <!-- Countries will be populated by countries.js -->
             </div>
         </div>
     </main>
@@ -1392,6 +1391,9 @@
                 
                 // Draft email modal functionality
                 initializeDraftEmailModal();
+                
+                // Initialize countries dropdown
+                populateCountryDropdown('country-list');
                 
                 // Dark mode toggle functionality
                 initializeDarkModeToggle();
