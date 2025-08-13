@@ -1552,7 +1552,7 @@
                 const countrySelector = document.getElementById('country-selector');
                 const countryDropdown = document.getElementById('country-dropdown');
                 const countrySearch = document.getElementById('country-search');
-                const countryOptions = document.querySelectorAll('.country-option');
+                const countryList = document.getElementById('country-list');
                 const selectedCountryDisplay = document.getElementById('selected-country');
                 const phoneError = document.getElementById('phone-error');
 
@@ -1637,11 +1637,12 @@
                         }
                     });
 
-                    // Search functionality
+                   // Search functionality
                     if (countrySearch) {
                         countrySearch.addEventListener('input', function() {
                             const searchTerm = this.value.toLowerCase();
                             let visibleCount = 0;
+                            const countryOptions = document.querySelectorAll('.country-option');
                             countryOptions.forEach(option => {
                                 const text = option.textContent.toLowerCase();
                                 if (text.includes(searchTerm)) {
@@ -1652,6 +1653,7 @@
                                 }
                             });
                             
+                            // Keep dropdown visible if there are results
                             if (visibleCount > 0) {
                                 countryDropdown.classList.remove('hidden');
                                 positionDropdown();
@@ -1659,21 +1661,26 @@
                         });
                     }
 
-                    // Country selection
-                    countryOptions.forEach(option => {
-                        option.addEventListener('click', function() {
-                            const countryCode = this.getAttribute('data-code');
-                            const countryFlag = this.getAttribute('data-flag');
-                            selectedCountryCode = countryCode;
-                            selectedCountryDisplay.textContent = `${countryFlag} ${countryCode}`;
-                            countryDropdown.classList.add('hidden');
-                            countrySearch.value = '';
-                            countryOptions.forEach(opt => opt.style.display = 'flex');
-                            if (emailPhoneField && emailPhoneField.value.trim()) {
-                                handlePhoneInput();
+                    // Country selection using event delegation
+                    if (countryList) {
+                        countryList.addEventListener('click', function(e) {
+                            if (e.target.classList.contains('country-option')) {
+                                const countryCode = e.target.getAttribute('data-code');
+                                const countryFlag = e.target.getAttribute('data-flag');
+                                selectedCountryCode = countryCode;
+                                selectedCountryDisplay.textContent = `${countryFlag} ${countryCode}`;
+                                countryDropdown.classList.add('hidden');
+                                countrySearch.value = '';
+                                // Reset search filter
+                                const countryOptions = document.querySelectorAll('.country-option');
+                                countryOptions.forEach(opt => opt.style.display = 'flex');
+                                // Revalidate phone if already entered
+                                if (emailPhoneField && emailPhoneField.value.trim()) {
+                                    handlePhoneInput();
+                                }
                             }
                         });
-                    });
+                    }
                 }
 
                 // Urgency selector functionality
