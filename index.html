@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bodunwa 'Bod' Idris - Executive Consultant</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +14,16 @@
         * {
             box-sizing: border-box;
         }
+        .logo img {
+            height:40px
+            
+        }
         
+        .header {
+            display:flex;
+            align-items: left;
+            padding:10px
+        }
         html, body {
             overflow-x: hidden;
             max-width: 100vw;
@@ -462,16 +472,37 @@
         }
         
         /* Trusted By Grid Styling */
+        .trusted-by-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: start;
+            justify-items: start;
+        }
+        
+        .trusted-by-sector {
+            text-align: left;
+            width: 100%;
+        }
+        
+        .trusted-by-sector h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
         .trusted-by-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem 1.5rem;
+            gap: 1rem;
             align-items: center;
-            justify-items: center;
         }
         
         .trusted-by-item {
-            text-align: center;
+            text-align: left;
             opacity: 0.8;
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
@@ -486,22 +517,29 @@
             #featured {
                 background-position: right top !important;
             }
+            
+            .trusted-by-section {
+                gap: 2rem;
+            }
+            
+            .trusted-by-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .trusted-by-item div {
+                font-size: 0.875rem !important;
+            }
+            
+            .trusted-by-sector h4 {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
         }
         
         @media (max-width: 480px) {
             #featured {
                 background-position: 80% top !important;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .trusted-by-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem 0.5rem;
-            }
-            
-            .trusted-by-item div {
-                font-size: 1rem !important;
             }
         }
         
@@ -560,13 +598,10 @@
             inset: 0;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            justify-content: space-between;
             padding: 2rem;
         }
         .service-card-explore {
-            position: absolute;
-            top: 1.5rem;
-            left: 1.5rem;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             border-radius: 50px;
@@ -574,6 +609,19 @@
             font-size: 0.875rem;
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            align-self: flex-start;
+        }
+        
+        .service-card-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: left;
+        }
+        
+        .service-card-bottom {
+            display: flex;
+            justify-content: flex-start;
         }
         
         .section-container-border {
@@ -616,18 +664,25 @@
 
     <!-- Header & Navigation -->
     <header id="header" class="fixed top-0 left-0 right-0 z-30">
-        <div class="container mx-auto px-6 py-5 flex justify-end items-center">
-            <!-- Desktop menu button -->
-            <button id="open-menu-button" class="hidden md:block text-black mix-blend-difference">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
+        <div class="container mx-auto px-6 py-5 flex justify-between items-center">
+            <!-- Left aligned logo -->
+            <a href="/" class="logo">
+                <img src="logo.png" alt="Logo here">
+            </a>
             
-            <!-- Mobile menu button -->
-            <button id="mobile-menu-btn" class="md:hidden text-black">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+            <div class="flex items-center space-x-4">
+                <!-- Desktop menu button -->
+                <button id="open-menu-button" class="hidden md:block text-black mix-blend-difference">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden text-black">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
         
         <!-- Mobile menu -->
@@ -649,11 +704,12 @@
                         <!-- Dark overlay rectangle behind text - desktop only -->
                         <div class="absolute inset-0 bg-black bg-opacity-60 rounded-2xl -z-10 transform scale-110 hidden md:block"></div>
                         <div class="relative z-10 p-8">
-                            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-4 text-black md:text-black" style="text-shadow: 2px 2px 4px rgba(255,255,255,0.8), -1px -1px 2px rgba(255,255,255,0.8), 1px -1px 2px rgba(255,255,255,0.8), -1px 1px 2px rgba(255,255,255,0.8);">
-                                Hi, I'm Bod Idris
+                            
+                            <h1 class="text-5xl md:text-3xl font-bold leading-tight mb-4 text-black md:text-black" style="text-shadow: 2px 2px 4px rgba(255,255,255,0.8), -1px -1px 2px rgba(255,255,255,0.8), 1px -1px 2px rgba(255,255,255,0.8), -1px 1px 2px rgba(255,255,255,0.8);">
+                                Management Consultant. Leader. Coach. Public Speaker
                             </h1>
                             <p class="text-lg md:text-xl text-gray-800 md:text-gray-800 mb-8" style="text-shadow: 1px 1px 3px rgba(255,255,255,0.9), -1px -1px 2px rgba(255,255,255,0.9), 1px -1px 2px rgba(255,255,255,0.9), -1px 1px 2px rgba(255,255,255,0.9);">
-                                An executive consultant and strategic leader focused on leveraging technology to drive transformation and deliver impactful marketplace solutions.
+                                .....adding values, impacting lives.....
                             </p>
                             <a href="aboutme.html" class="border border-black md:border-black text-black md:text-black font-bold py-3 px-8 rounded-lg hover:bg-black hover:text-white transition-colors" style="text-shadow: 1px 1px 2px rgba(255,255,255,0.8), -1px -1px 1px rgba(255,255,255,0.8), 1px -1px 1px rgba(255,255,255,0.8), -1px 1px 1px rgba(255,255,255,0.8);">
                                 About Me
@@ -700,62 +756,82 @@
                     <h3 class="text-gray-300 text-sm font-bold uppercase tracking-widest mb-8">TRUSTED BY</h3>
                 </div>
                 
-                <div class="trusted-by-grid text-white px-4 md:px-8">
-                    <!-- Row 1 -->
-                    <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl lg:text-4xl font-bold">RBC</div>
-                    </div>
-                    <div class="trusted-by-item">
-                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">Government of Alberta</div>
-                    </div>
-                    <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl lg:text-4xl font-bold">CIBC</div>
-                    </div>
-                    <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl lg:text-4xl font-bold">BMO</div>
-                    </div>
+                <div class="container mx-auto px-4 md:px-8">
+                    <div class="trusted-by-section text-white">
+                        <!-- Fintech Sector -->
+                        <div class="trusted-by-sector">
+                            <h4>Fintech</h4>
+                            <div class="trusted-by-grid">
+                                <div class="trusted-by-item">
+                                    <div class="text-2xl md:text-3xl lg:text-4xl font-bold">RBC</div>
+                                </div>
+                                <div class="trusted-by-item">
+                                    <div class="text-2xl md:text-3xl lg:text-4xl font-bold">CIBC</div>
+                                </div>
+                                <div class="trusted-by-item">
+                                    <div class="text-2xl md:text-3xl lg:text-4xl font-bold">BMO</div>
+                                </div>
+                                <div class="trusted-by-item">
+                                    <div class="text-2xl md:text-3xl lg:text-4xl font-bold">TD</div>
+                                </div>
+                                <div class="trusted-by-item">
+                                    <div class="text-xl md:text-2xl lg:text-3xl font-medium">Alberta Blue Cross</div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <!-- Row 2 -->
-                    <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl lg:text-4xl font-bold">TD</div>
-                    </div>
-                    <div class="trusted-by-item">
-                        <div class="text-2xl md:text-3xl lg:text-4xl font-bold">HP</div>
-                    </div>
-                    <div class="trusted-by-item">
-                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">City of Edmonton</div>
-                    </div>
-                    <div class="trusted-by-item">
-                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">Alberta Health Services</div>
-                    </div>
+                        <!-- Government Sector -->
+                        <div class="trusted-by-sector">
+                            <h4>Government</h4>
+                            <div class="trusted-by-grid">
+                                <div class="trusted-by-item">
+                                    <div class="text-xl md:text-2xl lg:text-3xl font-medium">Government of Alberta</div>
+                                </div>
+                                <div class="trusted-by-item">
+                                    <div class="text-xl md:text-2xl lg:text-3xl font-medium">City of Edmonton</div>
+                                </div>
+                                <div class="trusted-by-item">
+                                    <div class="text-xl md:text-2xl lg:text-3xl font-medium">City of Winnipeg</div>
+                                </div>
+                                <div class="trusted-by-item">
+                                    <div class="text-xl md:text-2xl lg:text-3xl font-medium">Edmonton Police Services</div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <!-- Row 3 -->
-                    <div class="trusted-by-item">
-                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">Edmonton Police Services</div>
-                    </div>
-                    <div class="trusted-by-item">
-                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">NAIT</div>
-                        <div class="text-xs tracking-widest text-gray-300 mt-1">Northern Alberta Institute of Technology</div>
-                    </div>
-                    <div class="trusted-by-item">
-                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">City of Winnipeg</div>
-                    </div>
-                    <div class="trusted-by-item">
-                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">Fujitsu Canada</div>
-                    </div>
+                        <!-- Healthcare Sector -->
+                        <div class="trusted-by-sector">
+                            <h4>Healthcare</h4>
+                            <div class="trusted-by-grid">
+                                <div class="trusted-by-item">
+                                    <div class="text-xl md:text-2xl lg:text-3xl font-medium">Alberta Health Services</div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <!-- Row 4 -->
-                    <div class="trusted-by-item">
-                        <div class="text-xl md:text-2xl lg:text-3xl font-medium">Alberta Blue Cross</div>
-                    </div>
-                    <div class="trusted-by-item">
-                        <!-- Spacer for grid alignment -->
-                    </div>
-                    <div class="trusted-by-item">
-                        <!-- Spacer for grid alignment -->
-                    </div>
-                    <div class="trusted-by-item">
-                        <!-- Spacer for grid alignment -->
+                        <!-- Software & Technology Sector -->
+                        <div class="trusted-by-sector">
+                            <h4>Software & Technology</h4>
+                            <div class="trusted-by-grid">
+                                <div class="trusted-by-item">
+                                    <div class="text-2xl md:text-3xl lg:text-4xl font-bold">HP</div>
+                                </div>
+                                <div class="trusted-by-item">
+                                    <div class="text-xl md:text-2xl lg:text-3xl font-medium">Fujitsu Canada</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Academia Sector -->
+                        <div class="trusted-by-sector">
+                            <h4>Academia</h4>
+                            <div class="trusted-by-grid">
+                                <div class="trusted-by-item">
+                                    <div class="text-xl md:text-2xl lg:text-3xl font-medium">NAIT</div>
+                                    <div class="text-xs tracking-widest text-gray-300 mt-1">Northern Alberta Institute of Technology</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -773,70 +849,102 @@
                     <!-- Management Consulting Card -->
                     <div class="service-card flex-shrink-0" style="background-image: url('photoa.png');">
                         <div class="service-card-overlay">
-                            <div class="service-card-explore">Explore</div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Management Consulting</h3>
-                            <p class="text-gray-200 text-sm">Strategic guidance to optimize your business operations and drive sustainable growth</p>
+                            <div class="service-card-content">
+                                <h3 class="text-2xl font-bold text-white mb-2">Management Consulting</h3>
+                                <p class="text-gray-200 text-sm">Strategic guidance to optimize your business operations and drive sustainable growth</p>
+                            </div>
+                            <div class="service-card-bottom">
+                                <div class="service-card-explore">Explore</div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Professional Project Execution Card -->
                     <div class="service-card flex-shrink-0" style="background-image: url('photob.png');">
                         <div class="service-card-overlay">
-                            <div class="service-card-explore">Explore</div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Professional Project Execution</h3>
-                            <p class="text-gray-200 text-sm">End-to-end project delivery with proven methodologies and expert leadership</p>
+                            <div class="service-card-content">
+                                <h3 class="text-2xl font-bold text-white mb-2">Professional Project Execution</h3>
+                                <p class="text-gray-200 text-sm">End-to-end project delivery with proven methodologies and expert leadership</p>
+                            </div>
+                            <div class="service-card-bottom">
+                                <div class="service-card-explore">Explore</div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Training Card -->
                     <div class="service-card flex-shrink-0" style="background-image: url('photoc.png');">
                         <div class="service-card-overlay">
-                            <div class="service-card-explore">Explore</div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Training</h3>
-                            <p class="text-gray-200 text-sm">Comprehensive skills development programs for teams and individuals</p>
+                            <div class="service-card-content">
+                                <h3 class="text-2xl font-bold text-white mb-2">Training</h3>
+                                <p class="text-gray-200 text-sm">Comprehensive skills development programs for teams and individuals</p>
+                            </div>
+                            <div class="service-card-bottom">
+                                <div class="service-card-explore">Explore</div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Mentorship Class Card -->
                     <div class="service-card flex-shrink-0" style="background-image: url('photod.png');">
                         <div class="service-card-overlay">
-                            <div class="service-card-explore">Explore</div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Join My Mentorship Class</h3>
-                            <p class="text-gray-200 text-sm">Exclusive mentorship program for aspiring leaders and entrepreneurs</p>
+                            <div class="service-card-content">
+                                <h3 class="text-2xl font-bold text-white mb-2">Join My Mentorship Class</h3>
+                                <p class="text-gray-200 text-sm">Exclusive mentorship program for aspiring leaders and entrepreneurs</p>
+                            </div>
+                            <div class="service-card-bottom">
+                                <div class="service-card-explore">Explore</div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Business Analysis Card -->
                     <div class="service-card flex-shrink-0" style="background-image: url('photoe.png');">
                         <div class="service-card-overlay">
-                            <div class="service-card-explore">Explore</div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Business Analysis</h3>
-                            <p class="text-gray-200 text-sm">Deep-dive analysis to identify opportunities and optimize performance</p>
+                            <div class="service-card-content">
+                                <h3 class="text-2xl font-bold text-white mb-2">Business Analysis</h3>
+                                <p class="text-gray-200 text-sm">Deep-dive analysis to identify opportunities and optimize performance</p>
+                            </div>
+                            <div class="service-card-bottom">
+                                <div class="service-card-explore">Explore</div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Duplicate cards for seamless loop -->
                     <div class="service-card flex-shrink-0" style="background-image: url('photoa.png');">
                         <div class="service-card-overlay">
-                            <div class="service-card-explore">Explore</div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Management Consulting</h3>
-                            <p class="text-gray-200 text-sm">Strategic guidance to optimize your business operations and drive sustainable growth</p>
+                            <div class="service-card-content">
+                                <h3 class="text-2xl font-bold text-white mb-2">Management Consulting</h3>
+                                <p class="text-gray-200 text-sm">Strategic guidance to optimize your business operations and drive sustainable growth</p>
+                            </div>
+                            <div class="service-card-bottom">
+                                <div class="service-card-explore">Explore</div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="service-card flex-shrink-0" style="background-image: url('photob.png');">
                         <div class="service-card-overlay">
-                            <div class="service-card-explore">Explore</div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Professional Project Execution</h3>
-                            <p class="text-gray-200 text-sm">End-to-end project delivery with proven methodologies and expert leadership</p>
+                            <div class="service-card-content">
+                                <h3 class="text-2xl font-bold text-white mb-2">Professional Project Execution</h3>
+                                <p class="text-gray-200 text-sm">End-to-end project delivery with proven methodologies and expert leadership</p>
+                            </div>
+                            <div class="service-card-bottom">
+                                <div class="service-card-explore">Explore</div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="service-card flex-shrink-0" style="background-image: url('photoc.png');">
                         <div class="service-card-overlay">
-                            <div class="service-card-explore">Explore</div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Training</h3>
-                            <p class="text-gray-200 text-sm">Comprehensive skills development programs for teams and individuals</p>
+                            <div class="service-card-content">
+                                <h3 class="text-2xl font-bold text-white mb-2">Training</h3>
+                                <p class="text-gray-200 text-sm">Comprehensive skills development programs for teams and individuals</p>
+                            </div>
+                            <div class="service-card-bottom">
+                                <div class="service-card-explore">Explore</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1321,6 +1429,8 @@
                 console.error('Calendly initialization error:', e);
             }
         }
+
+
 
         function initializeDraftEmailModal() {
             try {
